@@ -14,12 +14,12 @@ app = Flask(__name__)
 api = Api(app)
 redis_client.init_app(app)
 
+
 class Spike(Resource):
     def get(self):
         data = {"msg": 'get get get'}
         print(redis_client.get(111))
         return data, 200
-
 
 
 
