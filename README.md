@@ -1,1 +1,1 @@
-# flask 秒杀系统demo
+# flask 秒杀系统
