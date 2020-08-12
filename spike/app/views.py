@@ -1,6 +1,9 @@
 from flask import Response, jsonify, request
 from app import app, db
-from app.models import Product, Order, User
+from app.models import Product, Order, User 
+from app.redis import Redis
+
+
 
 # 首页展示所有商品
 @app.route('/')
@@ -24,29 +27,41 @@ def shop(food_id):
     data = {}
     data["msg"] = "success"
 
+
+    #  redis
+    redis = Redis()
+    print(redis.read("sum"))
+
+
+
+
     # 检查用户是否已经购买过（每个用户只能购买一次）
     name = request.form.get('name')
     name_id = User.query.filter_by(name=name).first()
-    order_name = Order.query.filter_by(user=name_id.id)
-    if order_name.count() >0:  
-        data["data"] = "该用户已购买，请不要重复购买"
-        return jsonify(data)
+    if name_id:
+        order_name = Order.query.filter_by(user=name_id.id)
+        if order_name.count() >0:  
+            data["data"] = "该用户已购买，请不要重复购买"
+            return jsonify(data), 302
+    else:
+        data["data"] = "用户不存在"
+        return jsonify(data), 302
 
     # 查询商品信息----检查商品库存
     product = Product.query.get(int(food_id))
     if product.inventory <=0:
-        data["data"] = "商品已售馨"
-        return jsonify(data)
+        data["data"] = "商品已售馨， 秒杀已完成，请等待下次 活动!!!!"
+        return jsonify(data), 302
     product.inventory -=1
 
     #  更新订单表
-    order_dict = {"user": 1, "product": product.id, "state": "已支付"}
+    order_dict = {"user": name_id.id, "product": product.id, "state": "已支付"}
     order = Order(**order_dict)
     db.session.add(order)
 
     db.session.commit()
-
-    return jsonify(data)
+    data["data"] = "恭喜你抢到心爱的商品 ！！！"
+    return jsonify(data), 200
 
 
     

@@ -12,16 +12,18 @@ foods = [
     {"name": "大西瓜", "desc": "我的最爱", "price": "1.98", "inventory": 10},
     {"name": "梨", "desc": "清心润肺大鸭梨", "price": "1.1", "inventory": 10},
 ]
-# 初始化一些商品
+# 初始化商品
 for food in foods:
     product = Product(**food)
     db.session.add(product)
 
-# 初始化一个用户
-users = {"name": "admin"}
-user = User(** users)
-db.session.add(user)
+# 初始化用户
+for i in range(50):
+    users = {"name": "admin{}".format(i)}
+    user = User(** users)
+    db.session.add(user)
 
+    
 db.session.commit()
 
 
