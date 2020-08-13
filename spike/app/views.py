@@ -30,10 +30,10 @@ def shop(food_id):
 
     #  redis
     redis = Redis()
-    print(redis.read("sum"))
-
-
-
+    inventory = int(redis.read("sum"))
+    if inventory <= 0:
+        data["data"] = "商品已售馨， 秒杀已完成，请等待下次 活动!!!!"
+        return jsonify(data), 302
 
     # 检查用户是否已经购买过（每个用户只能购买一次）
     name = request.form.get('name')
@@ -47,14 +47,13 @@ def shop(food_id):
         data["data"] = "用户不存在"
         return jsonify(data), 302
 
-    # 查询商品信息----检查商品库存
-    product = Product.query.get(int(food_id))
-    if product.inventory <=0:
-        data["data"] = "商品已售馨， 秒杀已完成，请等待下次 活动!!!!"
-        return jsonify(data), 302
-    product.inventory -=1
+    # redis 中扣除库存
+    inventory -=1
+    redis.write("sum", inventory)
 
     #  更新订单表
+    product = Product.query.get(int(food_id))
+    product.inventory -=1
     order_dict = {"user": name_id.id, "product": product.id, "state": "已支付"}
     order = Order(**order_dict)
     db.session.add(order)

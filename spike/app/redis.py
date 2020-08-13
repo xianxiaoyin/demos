@@ -60,3 +60,4 @@ class Redis(object):
             expire_in_seconds = config.REDIS_EXPIRE
         r = cls._get_r()
         r.expire(name, expire_in_seconds)
+

@@ -16,5 +16,7 @@ migrate = Migrate(app, db)
 
 from app import views, models, redis
 
+total = models.Product.query.get(1).inventory
+
 redis = redis.Redis()
-redis.write("sum", 10)
+redis.write("sum", int(total))
