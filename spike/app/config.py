@@ -6,15 +6,21 @@ class Config(object):
     host = "127.0.0.1"
     port = 3306
     user = 'root'
-    password = r'love.1993'
+    password = r'123456'
     database = 'spike'
-    SQLALCHEMY_DATABASE_URI = 'mysql://%s:%s@%s:%s/%s' % (user, password, host, port, database)
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://%s:%s@%s:%s/%s' % (user, password, host, port, database)
 
     # 设置sqlalchemy自动更跟踪数据库
-    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # 查询时会显示原始SQL语句
     SQLALCHEMY_ECHO = True
 
     # 禁止自动提交数据处理
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
+ 
+    # redis info
+    REDIS_HOST = "127.0.0.1"
+    REDIS_PORT = 6379
+    REDIS_DB = 0
+    REDIS_EXPIRE = 60*60*2
