@@ -1,3 +1,8 @@
 .idea/*
 *.pyc
 __pycache__
+.vscode/launch.json
+deviceManagement/db.sqlite3
+deviceManagement/.vscode/launch.json
+deviceManagement/devices/migrations/0001_initial.py
+deviceManagement/devices/migrations/0002_auto_20201219_1522.py
