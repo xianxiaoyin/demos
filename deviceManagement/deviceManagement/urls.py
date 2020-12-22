@@ -3,7 +3,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-19 12:28:05
-LastEditTime: 2020-12-19 17:47:14
+LastEditTime: 2020-12-22 22:31:15
 '''
 """deviceManagement URL Configuration
 
@@ -21,10 +21,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from devices.views import devices
+from django.urls import path,  re_path
+from devices.views import devices, deviceResults, deviceFilter
 
 urlpatterns = [
     path('', devices),
+    path('device/<int:id>/', deviceResults),
+    path('devicefilter', deviceFilter),
     path('admin/', admin.site.urls),
 ]
