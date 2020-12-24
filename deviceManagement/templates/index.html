@@ -26,38 +26,34 @@
       <div class="form-group">
         <input type="text" class="form-control" placeholder="Search" name="filterdata">
       </div>
-    <button type="submit" class="btn btn-default">Submit</button>
+    <button type="submit" class="btn btn-default">Search</button>
     </form>
-    <h1 class="text-center">设备信息展示页</h1>
+    <h1 class="text-center">PID Device List</h1>
     <div>
       <table class="table table-bordered table-hover ">
         <tr >
           <th class="text-center">SN </th>
           <th class="text-center">barcode </th>
-          <th class="text-center">gategory </th>
+          <th class="text-center">category </th>
           <th class="text-center">status </th>
           <th class="text-center">project </th>
           <th class="text-center">rowner </th>
-          <th class="text-center">location </th>
+          <th class="text-center">location </th> 
           <th class="text-center">update_at </th>
-          <th class="text-center">comments </th>
-          <th class="text-center"></th>
+          <th class="text-center"> details </th>
           
         </tr>
         {% for device in devices %}
         <tr >
           <td class="text-center">{{ device.sn}} </td>
           <td class="text-center">{{ device.bcode}} </td>
-          <td class="text-center">{{ device.get_gategory_display }} </td>
+          <td class="text-center">{{ device.get_category_display }} </td>
           <td class="text-center">{{ device.get_status_display }} </td>
           <td class="text-center">{{ device.get_project_display}} </td>
           <td class="text-center">{{ device.rowner}} </td>
           <td class="text-center">{{ device.get_location_display }} </td>
           <td class="text-center">{{ device.update_at}} </td>
           <td class="text-center">{{ device.comments}} </td>
-          <td class="text-center">
-            <a href="device/{{ device.id }}">详情</a></add>
-          </td>
         </tr>
         {% endfor %}
       </table>

@@ -4,10 +4,11 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-19 12:30:13
-LastEditTime: 2020-12-19 17:23:25
+LastEditTime: 2020-12-24 22:31:42
 '''
 from django.db import models
 from datetime import datetime
+from django_filters import  FilterSet, ChoiceFilter
 
 # 设备信息表
 
@@ -75,7 +76,7 @@ locations = [
 class Devices(models.Model):
     sn = models.CharField(verbose_name="Serial Number", max_length=20)
     bcode =  models.CharField(verbose_name="Barcode", max_length=20, null=True, blank=True)
-    gategory = models.CharField(verbose_name="gategory", max_length=6,  choices=categorys)
+    category = models.CharField(verbose_name="category", max_length=6,  choices=categorys)
     status = models.CharField(verbose_name="status", max_length=6, choices=status)
     project =  models.CharField(verbose_name="project", max_length=6, choices=projects)
     functeam =  models.CharField(verbose_name="function team", max_length=6, choices=functeams)
@@ -92,3 +93,8 @@ class Devices(models.Model):
     def __str__(self):
         return "%s" %self.sn
     
+class F(FilterSet):
+    category = ChoiceFilter(choices=categorys)
+    class Meta:
+        model = Devices
+        fields = ["category"]

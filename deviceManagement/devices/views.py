@@ -4,11 +4,11 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-19 12:30:13
-LastEditTime: 2020-12-24 00:13:21
+LastEditTime: 2020-12-24 22:37:52
 '''
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models  import Devices
+from .models  import Devices, F
 from django.db.models import Q
 import numpy as np
 
@@ -33,7 +33,10 @@ def deviceResults(request, id):
 # 搜索页面
 def deviceFilter(request):
     filterdata = request.GET.get("filterdata")
-    devices = Devices.objects.filter(Q(sn=filterdata)|Q(bcode=filterdata)|Q(gategory=filterdata) )
+    if filterdata:
+        devices = Devices.objects.filter(Q(sn__contains=filterdata)|Q(bcode__contains=filterdata)|Q(category__contains=filterdata) )
+    else:
+         devices = Devices.objects.all()
     return render(request, "index.html", {"devices": devices})
 
 def deviceDebug(request):
