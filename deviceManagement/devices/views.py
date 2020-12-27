@@ -4,7 +4,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-19 12:30:13
-LastEditTime: 2020-12-27 17:02:32
+LastEditTime: 2020-12-27 21:04:59
 '''
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -87,6 +87,8 @@ def deviceDebug(request):
     return  HttpResponse(json.dumps({'data': data}))
 
 def deviceTest(request):
+    from utils.exportexcel import saveData
+    saveData(r"D:\learn\demos\deviceManagement\utils\1.xlsx")
     return render(request, "test.html")
 
 

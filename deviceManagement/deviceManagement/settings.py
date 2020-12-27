@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "devices",
+    "devices", 
 ]
 
 MIDDLEWARE = [
@@ -128,3 +128,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_PATH = os.path.join(os.path.dirname(__file__), 'static')
+ 
+STATICFILES_DIRS = [
+    (os.path.join(BASE_DIR, 'static'))
+]
