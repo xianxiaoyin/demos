@@ -3,7 +3,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-19 12:28:05
-LastEditTime: 2020-12-24 22:40:06
+LastEditTime: 2020-12-27 16:02:28
 '''
 """deviceManagement URL Configuration
 
@@ -24,7 +24,7 @@ from django.contrib import admin
 from django.urls import path
 from django_filters.views import object_filter
 from devices.views import devices, deviceResults, deviceFilter, deviceDebug, deviceTest, deviceEdit
- 
+
 
 urlpatterns = [
     path('', devices),

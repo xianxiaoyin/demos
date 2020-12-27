@@ -4,12 +4,11 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-19 12:30:13
-LastEditTime: 2020-12-24 22:31:42
+LastEditTime: 2020-12-27 16:49:54
 '''
 from django.db import models
 from datetime import datetime
-from django_filters import  FilterSet, ChoiceFilter
-
+ 
 # 设备信息表
 
 status = [
@@ -93,8 +92,3 @@ class Devices(models.Model):
     def __str__(self):
         return "%s" %self.sn
     
-class F(FilterSet):
-    category = ChoiceFilter(choices=categorys)
-    class Meta:
-        model = Devices
-        fields = ["category"]
