@@ -4,14 +4,14 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-19 12:30:13
-LastEditTime: 2020-12-27 21:04:59
+LastEditTime: 2020-12-28 16:31:32
 '''
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models  import Devices, categorys, status, projects, functeams, locations
 from django.db.models import Q
 import json
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 # 展示所有的设备信息
@@ -59,8 +59,6 @@ def deviceFilter(request):
     if not locations_index:
         locations_index = filterdata
 
-    print(filterdata)
-    print(projects_index)
     if filterdata:
         devices = Devices.objects.filter(Q(sn__contains=filterdata)|
                                          Q(bcode__contains=filterdata)|
@@ -71,7 +69,19 @@ def deviceFilter(request):
                                          Q(location__contains=locations_index) )
     else:
          devices = Devices.objects.all()
-    return render(request, "index.html", {"devices": devices})
+
+
+    paginator = Paginator(devices, 10, 10)
+    page = request.GET.get('page')
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        contacts = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        contacts = paginator.page(paginator.num_pages)
+    return render(request, "index.html", {"devices": contacts})
 
 
 
@@ -91,4 +101,12 @@ def deviceTest(request):
     saveData(r"D:\learn\demos\deviceManagement\utils\1.xlsx")
     return render(request, "test.html")
 
-
+def uploadExcel(request):
+    filename = request.FILES.get("txt_file")
+    print(filename)
+    if filename:
+        from utils.exportexcel import saveData
+        saveData(filename)
+        return HttpResponse({"msg": "successful"})
+    else:
+        return HttpResponse({"msg": "error"})

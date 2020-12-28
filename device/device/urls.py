@@ -2,13 +2,13 @@
 Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
-Date: 2020-12-19 12:28:05
-LastEditTime: 2020-12-28 15:23:35
+Date: 2020-12-28 10:11:49
+LastEditTime: 2020-12-28 10:18:05
 '''
-"""deviceManagement URL Configuration
+"""device URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.1/topics/http/urls/
+    https://docs.djangoproject.com/en/2.2/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -22,17 +22,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django_filters.views import object_filter
-from devices.views import devices, deviceResults, deviceFilter, deviceDebug, deviceTest, deviceEdit, uploadExcel
+# urlpatterns = [
+#     path('admin/', admin.site.urls),
+# ]
 
+# xadmin abort
+import xadmin
+xadmin.autodiscover()
+
+from xadmin.plugins import xversion
+xversion.register_models()
 
 urlpatterns = [
-    path('', devices),
-    # path('', object_filter, {'model': devices}),
-    path('device/<int:id>/', deviceResults),
-    path('devicefilter', deviceFilter),
-    path('devicedebug', deviceDebug),
-    path('devicetest', deviceTest),
-    path('upload', uploadExcel),
-    path('admin/', admin.site.urls),
+    path(r'xadmin/', xadmin.site.urls)
 ]
+
