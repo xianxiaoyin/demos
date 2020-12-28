@@ -22,17 +22,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django_filters.views import object_filter
-from devices.views import devices, deviceResults, deviceFilter, deviceDebug, deviceTest, deviceEdit, uploadExcel
+from devices.views import deviceFilter, uploadExcel
 
 
 urlpatterns = [
-    path('', devices),
-    # path('', object_filter, {'model': devices}),
-    path('device/<int:id>/', deviceResults),
-    path('devicefilter', deviceFilter),
-    path('devicedebug', deviceDebug),
-    path('devicetest', deviceTest),
+    path('', deviceFilter),
     path('upload', uploadExcel),
     path('admin/', admin.site.urls),
 ]

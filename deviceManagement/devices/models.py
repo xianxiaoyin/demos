@@ -8,9 +8,9 @@ LastEditTime: 2020-12-28 10:24:01
 '''
 from django.db import models
 from datetime import datetime
- 
+
 # 设备信息表
- 
+
 status = [
     ("u", "In use"),
     ("d", "Damage"),
@@ -69,26 +69,24 @@ locations = [
 ]
 
 
-
-
-
 class Devices(models.Model):
-    sn = models.CharField(verbose_name="Serial Number", max_length=20)
-    bcode =  models.CharField(verbose_name="Barcode", max_length=20, null=True, blank=True)
-    category = models.CharField(verbose_name="category", max_length=6,  choices=categorys)
-    status = models.CharField(verbose_name="status", max_length=6, choices=status)
-    project =  models.CharField(verbose_name="project", max_length=6, choices=projects)
-    functeam =  models.CharField(verbose_name="function team", max_length=6, choices=functeams)
-    location = models.CharField(verbose_name="location", max_length=6, choices=locations)
+    sn = models.CharField(verbose_name="Serial Number", max_length=20, null=True, blank=True)
+    bcode = models.CharField(verbose_name="Barcode", max_length=20, null=True, blank=True)
+    category = models.CharField(verbose_name="category", max_length=6, choices=categorys, null=True, blank=True)
+    status = models.CharField(verbose_name="status", max_length=6, choices=status, null=True, blank=True)
+    project = models.CharField(verbose_name="project", max_length=6, choices=projects, null=True, blank=True)
+    functeam = models.CharField(verbose_name="function team", max_length=6, choices=functeams, null=True, blank=True)
+    location = models.CharField(verbose_name="location", max_length=6, choices=locations, null=True, blank=True)
     po = models.CharField(verbose_name="PO#", max_length=20, null=True, blank=True)
     rowner = models.CharField(verbose_name="requestor(Owner)", max_length=20, null=True, blank=True)
     wwid = models.CharField(verbose_name="BorrowWWID", max_length=10, null=True, blank=True)
     comments = models.TextField(verbose_name="comments", null=True, blank=True)
     update_at = models.DateTimeField(verbose_name="update time", default=datetime.now)
-    create_at = models.DateTimeField(verbose_name="create time", auto_now_add=True) 
-    class  Meta:
+    create_at = models.DateTimeField(verbose_name="create time", auto_now_add=True)
+
+    class Meta:
         db_table = "devices"
         ordering = ["update_at"]
+
     def __str__(self):
-        return "%s" %self.sn
-    
+        return "%s" % self.sn

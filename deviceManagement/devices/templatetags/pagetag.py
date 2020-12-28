@@ -10,12 +10,9 @@ from django import template
 register = template.Library()
 
 
-@register.simple_tag()
+@register.simple_tag
 def circle_page(curr_page, loop_page):
-    print(curr_page)
-    print(loop_page)
     offset = abs(curr_page - loop_page)
-    print(offset)
     if offset < 3:
         if curr_page == loop_page:
             page_ele = '<li class="active"><a href="?page=%s">%s</a></li>'%(loop_page,loop_page)
