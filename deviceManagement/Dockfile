@@ -1,0 +1,9 @@
+FROM rackspacedot/python37:latest
+
+RUN pip install django openpyxl
+
+RUN mkdir -p /root/devices
+
+COPY "deviceManagement"   "/root/devices/deviceManagement"
+
+CMD ["python", "/root/devices/deviceManagement", "runserver", "0.0.0.0:9000"]
