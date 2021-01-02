@@ -1,3 +1,9 @@
 #!/usr/bin/env bash
 
-docker stop dp && docker rm dp
+docker ps -a  | grep dp
+
+if [ $? -ne 0 ]; then
+    docker stop dp && docker rm dp
+fi
+
+
