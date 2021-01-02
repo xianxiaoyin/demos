@@ -13,7 +13,7 @@ from datetime import datetime
 
 
 def getIndex(modes_list, filterdata ):
-   return {v:k for k,v in dict(modes_list).items()}.get(filterdata)
+   return {v: k for k, v in dict(modes_list).items()}.get(filterdata)
 
 
 
