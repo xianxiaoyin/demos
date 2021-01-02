@@ -33,7 +33,7 @@
 <!-- optionally if you need a theme like font awesome theme you can include it as mentioned below -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/themes/fa/theme.js"></script>
 <!-- optionally if you need translation for your language then include  locale file as mentioned below -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/js/locales/zh.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/js/locales/us.js"></script>
     <title>PID Device List</title>
 
     <!-- Bootstrap -->
@@ -71,7 +71,8 @@
           <th class="text-center">category </th>
           <th class="text-center">status </th>
           <th class="text-center">project </th>
-          <th class="text-center">rowner </th>
+          <th class="text-center">request_owner </th>
+          <th class="text-center">actual_user </th>
           <th class="text-center">location </th> 
           <th class="text-center">update_at </th>
           <th class="text-center"> details </th>
@@ -85,9 +86,10 @@
           <td class="text-center">{{ device.get_status_display }} </td>
           <td class="text-center">{{ device.get_project_display}} </td>
           <td class="text-center">{{ device.rowner}} </td>
+          <td class="text-center">{{ device.wwid}} </td>
           <td class="text-center">{{ device.get_location_display }} </td>
           <td class="text-center">{{ device.update_at}} </td>
-          <td class="text-center">{{ device.comments}} </td>
+          <td class="text-center">{{ device.comments}}  {{ device.po }}</td>
         </tr>
         {% endfor %}
       </table>
