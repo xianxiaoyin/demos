@@ -2,7 +2,7 @@
 
 docker ps -a  | grep dp
 
-if [ $? -ne 0 ]; then
+if [ $? -eq 0 ]; then
     docker stop dp && docker rm dp
 fi
 
