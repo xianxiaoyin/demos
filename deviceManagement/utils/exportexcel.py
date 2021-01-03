@@ -6,6 +6,7 @@ Date: 2020-12-27 17:45:18
 LastEditTime: 2020-12-27 21:32:39
 '''
 
+
 import openpyxl
 from devices.models import Devices
 from devices.models import categorys, status, projects, functeams, locations
