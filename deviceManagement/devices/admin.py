@@ -12,4 +12,5 @@ from .models import Devices
 
 @admin.register(Devices)
 class DevicesAdmin(admin.ModelAdmin):
-    list_display = ["sn", "bcode", "category", "status", "project", "functeam", "location", "rowner", "wwid", "comments", "update_at"]
+    list_display = ["sn", "bcode", "category", "status", "project", "location",
+                    "actual_user", "borrow_wwid", "po_requestor", "comments", "update_at"]
