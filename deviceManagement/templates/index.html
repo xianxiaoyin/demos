@@ -10,30 +10,35 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
     <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
-    
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
-<!-- if using RTL (Right-To-Left) orientation, load the RTL CSS file after fileinput.css by uncommenting below -->
-<!-- link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/css/fileinput-rtl.min.css" media="all" rel="stylesheet" type="text/css" /-->
-{% comment %} <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> {% endcomment %}
-<!-- piexif.min.js is needed for auto orienting image files OR when restoring exif data in resized images and when you 
-    wish to resize images before upload. This must be loaded before fileinput.min.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/js/plugins/piexif.min.js" type="text/javascript"></script>
-<!-- sortable.min.js is only needed if you wish to sort / rearrange files in initial preview. 
-    This must be loaded before fileinput.min.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/js/plugins/sortable.min.js" type="text/javascript"></script>
-<!-- popper.min.js below is needed if you use bootstrap 4.x. You can also use the bootstrap js 
-   3.3.x versions without popper.min.js. -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<!-- bootstrap.min.js below is needed if you wish to zoom and preview file content in a detail modal
-    dialog. bootstrap 4.x is supported. You can also use the bootstrap js 3.3.x versions. -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" type="text/javascript"></script>
-<!-- the main fileinput plugin file -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/js/fileinput.min.js"></script>
-<!-- optionally if you need a theme like font awesome theme you can include it as mentioned below -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/themes/fa/theme.js"></script>
-<!-- optionally if you need translation for your language then include  locale file as mentioned below -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/js/locales/us.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+    <!-- if using RTL (Right-To-Left) orientation, load the RTL CSS file after fileinput.css by uncommenting below -->
+    <!-- link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/css/fileinput-rtl.min.css" media="all" rel="stylesheet" type="text/css" /-->
+    {% comment %} <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> {% endcomment %}
+    <!-- piexif.min.js is needed for auto orienting image files OR when restoring exif data in resized images and when you
+        wish to resize images before upload. This must be loaded before fileinput.min.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/js/plugins/piexif.min.js" type="text/javascript"></script>
+    <!-- sortable.min.js is only needed if you wish to sort / rearrange files in initial preview.
+        This must be loaded before fileinput.min.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/js/plugins/sortable.min.js" type="text/javascript"></script>
+    <!-- popper.min.js below is needed if you use bootstrap 4.x. You can also use the bootstrap js
+       3.3.x versions without popper.min.js. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <!-- bootstrap.min.js below is needed if you wish to zoom and preview file content in a detail modal
+        dialog. bootstrap 4.x is supported. You can also use the bootstrap js 3.3.x versions. -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- the main fileinput plugin file -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/js/fileinput.min.js"></script>
+    <!-- optionally if you need a theme like font awesome theme you can include it as mentioned below -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/themes/fa/theme.js"></script>
+    <!-- optionally if you need translation for your language then include  locale file as mentioned below -->
+      <link href="/static/dist/locale/bootstrap-table-en-US.min.js" rel="stylesheet" type="text/css" />
+      <link href="/static/dist/extensions/editable/bootstrap-table-editable.min.js" rel="stylesheet" type="text/css" />
     <title>PID Device List</title>
 
     <!-- Bootstrap -->
@@ -64,34 +69,34 @@
         <input type="file" name="txt_file" id="txt_file" multiple class="file-loading " />
       </div>
     </div>
-      <table class="table table-bordered table-hover ">
+      <table class="table table-bordered table-hover " id="tb_user">
         <tr >
-          <th class="text-center">SN </th>
-          <th class="text-center">barcode </th>
-          <th class="text-center">category </th>
-          <th class="text-center">status </th>
-          <th class="text-center">project </th>
-          <th class="text-center">borrow_wwid </th>
-          <th class="text-center">actual_user </th>
-          <th class="text-center">po_requestor </th>
-          <th class="text-center">location </th>
-          <th class="text-center">update_at </th>
-          <th class="text-center"> details </th>
+          <th class="text-center" >SN </th>
+          <th class="text-center" >barcode </th>
+          <th class="text-center" >category </th>
+          <th class="text-center" >status </th>
+          <th class="text-center" >project </th>
+          <th class="text-center" >borrow_wwid </th>
+          <th class="text-center" >actual_user </th>
+          <th class="text-center" >po_requestor </th>
+          <th class="text-center" >location </th>
+          <th class="text-center" >update_at </th>
+          <th class="text-center" > details </th>
           
         </tr>
         {% for device in devices %}
         <tr >
-          <td class="text-center">{{ device.sn  | default_if_none:""}} </td>
-          <td class="text-center">{{ device.bcode | default_if_none:""}} </td>
-          <td class="text-center">{{ device.category }} </td>
-          <td class="text-center">{{ device.status }} </td>
-          <td class="text-center">{{ device.project}} </td>
-          <td class="text-center">{{ device.borrow_wwid  | default_if_none:"" }} </td>
-          <td class="text-center">{{ device.actual_user  | default_if_none:""}} </td>
-          <td class="text-center">{{ device.po_requestor  | default_if_none:""}} </td>
-          <td class="text-center">{{ device.location }} </td>
+          <td class="text-center" id="sn">{{ device.sn  | default_if_none:""}} </td>
+          <td class="text-center" id="barcode">{{ device.bcode | default_if_none:""}} </td>
+          <td class="text-center" id="category">{{ device.category }} </td>
+          <td class="text-center" id="status">{{ device.status }} </td>
+          <td class="text-center" id="project">{{ device.project}} </td>
+          <td class="text-center" id="borrow_wwid">{{ device.borrow_wwid  | default_if_none:"" }} </td>
+          <td class="text-center" id="actual_user">{{ device.actual_user  | default_if_none:""}} </td>
+          <td class="text-center" id="po_requestor">{{ device.po_requestor  | default_if_none:""}} </td>
+          <td class="text-center" id="location">{{ device.location }} </td>
           <td class="text-center">{{ device.update_at}} </td>
-          <td class="text-center">{{ device.comments  | default_if_none:""}}  {{ device.po  | default_if_none:"" }}</td>
+          <td class="text-center" id="details">{{ device.comments  | default_if_none:""}}  {{ device.po  | default_if_none:"" }}</td>
         </tr>
         {% endfor %}
       </table>
@@ -185,6 +190,73 @@ var FileInput = function () {
 }
     return oFile;
 };
+
+
+$(function () {
+        $("#tb_user").bootstrapTable({
+            toolbar: "#toolbar",
+            idField: "Id",
+            pagination: true,
+            showRefresh: true,
+            search: true,
+            clickToSelect: true,
+            queryParams: function (param) {
+                return {};
+            },
+            url: "/Editable/GetUsers",
+            columns: [{
+                checkbox: true
+            }, {
+                field: "UserName",
+                title: "用户名",
+                editable: {
+                    type: 'text',
+                    title: '用户名',
+                    validate: function (v) {
+                        if (!v) return '用户名不能为空';
+
+                    }
+                }
+            }, {
+                field: "Age",
+                title: "年龄",
+            }, {
+                field: "Birthday",
+                title: "生日",
+                formatter: function (value, row, index) {
+                    var date = eval('new ' + eval(value).source)
+                    return date.format("yyyy-MM-dd");
+                }
+            },
+            {
+                field: "DeptName",
+                title: "部门"
+            }, {
+                field: "Hobby",
+                title: "爱好"
+            }],
+            onEditableSave: function (field, row, oldValue, $el) {
+                $.ajax({
+                    type: "post",
+                    url: "/Editable/Edit",
+                    data: row,
+                    dataType: 'JSON',
+                    success: function (data, status) {
+                        if (status == "success") {
+                            alert('提交数据成功');
+                        }
+                    },
+                    error: function () {
+                        alert('编辑失败');
+                    },
+                    complete: function () {
+
+                    }
+
+                });
+            }
+        });
+    });
   </script>
   </body>
 </html>
