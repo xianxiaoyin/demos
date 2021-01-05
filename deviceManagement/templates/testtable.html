@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/static/x-editable/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" type="text/css" />
+    <link href="/static/bootstrap-table/bootstrap-table.css" rel="stylesheet" type="text/css" />
+
+    <script src="/static/jquery/jquery-3.5.1.min.js"></script>
+    <script src="/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="/static/x-editable/bootstrap3-editable/js/bootstrap-editable.min.js" ></script>
+    <script src="/static/bootstrap-table/bootstrap-table.min.js" ></script>
+    <script src="/static/bootstrap-table/locale/bootstrap-table-en-US.min.js" ></script>
+    <script src="/static/bootstrap-table/extensions/editable/bootstrap-table-editable.min.js" ></script>
+    <title>test</title>
+</head>
+<body>
+<div id="toolbar"></div>
+<table id="tb_user">
+
+</table>
+
+<script>
+  $(function () {
+        $("#tb_user").bootstrapTable({
+            toolbar: "#toolbar",
+            idField: "Id",
+            pagination: true,
+            showRefresh: true,
+            search: true,
+            clickToSelect: true,
+            queryParams: function (param) {
+                return {};
+            },
+            url: "/static/data.json",
+            columns: [{
+                checkbox: true
+            }, {
+                field: "UserName",
+                title: "用户名",
+                editable: {
+                    type: 'text',
+                    title: '用户名',
+                    validate: function (v) {
+                        if (!v) return '用户名不能为空';
+
+                    }
+                }
+            }, {
+                field: "Age",
+                title: "年龄",
+            },             {
+                field: "Birthday",
+                title: "生日",
+            },
+
+
+                　　　　　　　　{
+                field: "DeptId",
+                title: "部门",
+                editable: {
+                    type: 'select',
+                    title: '部门',
+                    source: function () {
+                        var result = [];
+                        $.ajax({
+                            url: '/status?tag=2',
+                            async: false,
+                            type: "get",
+                            data: {},
+                            success: function (data, status) {
+                                {#data = JSON.parse(data);#}
+                                console.log(data)
+                                $.each(data, function (key, value) {
+                                    result.push({ value: value.id, text: value.name });
+                                });
+                            }
+                        });
+                        return result;
+                    }
+                }
+            }
+
+
+            ],
+            onEditableSave: function (field, row, oldValue, $el) {
+                $.ajax({
+                    type: "post",
+                    url: "",
+                    data: row,
+                    dataType: 'JSON',
+                    success: function (data, status) {
+                        if (status == "success") {
+                            console.log('提交数据成功');
+                        }
+                    },
+                    error: function () {
+                        console.log('编辑失败');
+                    },
+                    complete: function () {
+
+                    }
+
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -7,7 +7,7 @@ Date: 2020-12-19 12:30:13
 LastEditTime: 2021-01-05 18:24:07
 '''
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .models import Devices, Status
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -15,16 +15,12 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 #  更新设别信息
 def deviceEdit(request):
-    if request.method == 'POST':
-        print(request.body)
-        return HttpResponse()
+    return render(request, "testtable.html")
 
 
 # 搜索页面
 def deviceFilter(request):
     filterdata = request.GET.get("filterdata")
-
-
 
     # # 对categorys 过滤
     # categorys_index = {v: k for k, v in dict(categorys).items()}.get(filterdata)
@@ -54,12 +50,12 @@ def deviceFilter(request):
     if filterdata:
         devices = Devices.objects.filter(Q(sn__contains=filterdata) |
                                          Q(bcode__contains=filterdata))
-                                         # |
-                                         # Q(category__contains=categorys_index) |
-                                         # Q(status__contains=status_index) |
-                                         # Q(project__contains=projects_index) |
-                                         # Q(functeam__contains=functeams_index) |
-                                         # Q(location__contains=locations_index))
+        # |
+        # Q(category__contains=categorys_index) |
+        # Q(status__contains=status_index) |
+        # Q(project__contains=projects_index) |
+        # Q(functeam__contains=functeams_index) |
+        # Q(location__contains=locations_index))
     else:
         devices = Devices.objects.all()
 
@@ -76,7 +72,6 @@ def deviceFilter(request):
     return render(request, "index.html", {"devices": contacts})
 
 
-
 def uploadExcel(request):
     filename = request.FILES.get("txt_file")
     print(filename)
@@ -87,3 +82,15 @@ def uploadExcel(request):
         return HttpResponse({"msg": "successful"})
     else:
         return HttpResponse({"msg": "error"})
+
+
+# 获取状态
+
+def status(request):
+    tmp = []
+    tag = request.GET.get("tag")
+    data = Status.objects.filter(tag=tag).values_list("name", flat=True)
+    data = list(data)
+    for index, d in enumerate(data, 1):
+        tmp.append({"id": index, "name": d})
+    return JsonResponse(tmp, safe=False)

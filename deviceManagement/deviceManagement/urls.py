@@ -22,11 +22,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from devices.views import deviceFilter, uploadExcel
+from devices.views import deviceFilter, uploadExcel, deviceEdit, status
 
 
 urlpatterns = [
     path('', deviceFilter),
     path('upload', uploadExcel),
+    path('test', deviceEdit),
+    path('status', status),
     path('admin/', admin.site.urls),
 ]
