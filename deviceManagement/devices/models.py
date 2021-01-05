@@ -4,7 +4,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-19 12:30:13
-LastEditTime: 2020-12-29 16:48:04
+LastEditTime: 2021-01-05 15:44:44
 '''
 from django.db import models
 from datetime import datetime
@@ -29,7 +29,8 @@ class Status(models.Model):
 
     class Meta:
         db_table = "status"
-
+    def __str__(self):
+        return self.name
 
 # 设备信息表
 

@@ -3,7 +3,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-27 17:45:18
-LastEditTime: 2020-12-27 21:32:39
+LastEditTime: 2021-01-05 18:00:02
 '''
 
 
@@ -37,25 +37,25 @@ def initStatus(filename):
             except Exception as e:
                 print(e)
                 print(line)
-        elif line[3]:
+        if line[3]:
             try:
                 Status.objects.update_or_create(name=line[3], tag="2", update_at=datetime.now(), create_at=datetime.now())
             except Exception as e:
                 print(e)
                 print(line)
-        elif line[7]:
+        if line[7]:
             try:
                 Status.objects.update_or_create(name=line[7], tag="3", update_at=datetime.now(), create_at=datetime.now())
             except Exception as e:
                 print(e)
                 print(line)
-        elif line[9]:
+        if line[9]:
             try:
                 Status.objects.update_or_create(name=line[9], tag="4", update_at=datetime.now(), create_at=datetime.now())
             except Exception as e:
                 print(e)
                 print(line)
-        elif line[10]:
+        if line[10]:
             try:
                 Status.objects.update_or_create(name=line[10], tag="5", update_at=datetime.now(), create_at=datetime.now())
             except Exception as e:
