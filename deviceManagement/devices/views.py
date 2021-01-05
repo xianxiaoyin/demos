@@ -4,7 +4,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-19 12:30:13
-LastEditTime: 2020-12-28 16:31:32
+LastEditTime: 2021-01-05 18:24:07
 '''
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -82,8 +82,8 @@ def uploadExcel(request):
     print(filename)
     if filename:
         from utils.exportexcel import saveData, initStatus
-        initStatus(filename)
-        # saveData(filename)
+        # initStatus(filename)
+        saveData(filename)
         return HttpResponse({"msg": "successful"})
     else:
         return HttpResponse({"msg": "error"})

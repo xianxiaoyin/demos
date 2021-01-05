@@ -4,7 +4,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-19 12:30:13
-LastEditTime: 2021-01-05 15:44:44
+LastEditTime: 2021-01-05 18:50:05
 '''
 from django.db import models
 from datetime import datetime
@@ -22,7 +22,7 @@ location = 5
 # 状态
 
 class Status(models.Model):
-    name = models.CharField(verbose_name="status name", max_length=20)
+    name = models.CharField(verbose_name="status name", max_length=20, unique=True)
     tag = models.CharField(verbose_name="tag", max_length=5)
     update_at = models.DateTimeField(verbose_name="update time", default=datetime.now)
     create_at = models.DateTimeField(verbose_name="create time", auto_now_add=True)
@@ -40,7 +40,7 @@ class Devices(models.Model):
     category = models.ForeignKey(Status, on_delete=SET_NULL, blank=True, null=True, related_name="category")
     status = models.ForeignKey(Status, on_delete=SET_NULL, blank=True, null=True, related_name="status")
     project = models.ForeignKey(Status, on_delete=SET_NULL, blank=True, null=True, related_name="project")
-    functeam = models.ForeignKey(Status, on_delete=SET_NULL, blank=True, null=True, related_name="functeam")
+    functeam = models.ForeignKey(Status, on_delete=SET_NULL, blank=True, null=True, related_name="functeam",default="")
     location = models.ForeignKey(Status, on_delete=SET_NULL, blank=True, null=True, related_name="location")
     po = models.CharField(verbose_name="PO#", max_length=20, null=True, blank=True)
     actual_user = models.CharField(verbose_name="actual_user", max_length=20, null=True, blank=True)

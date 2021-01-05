@@ -3,7 +3,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-27 17:45:18
-LastEditTime: 2021-01-05 18:00:02
+LastEditTime: 2021-01-05 18:49:49
 '''
 
 
@@ -62,6 +62,16 @@ def initStatus(filename):
                 print(e)
                 print(line)
 
+
+def obj_get(obj, name, tag):
+    try:
+        return obj.objects.get(name = name, tag = tag)
+    except Exception as e:
+        print("not found")
+        return 111 
+
+
+
 def saveData(filename):
     obj = []
     for line in readExcel(filename)[1:]:
@@ -72,18 +82,22 @@ def saveData(filename):
             #             po=line[8], rowner=line[9],wwid=line[10],
             #             comments=line[12] )) 
             # Devices.objects.bulk_create(obj)
-            try:
-                Devices.objects.get_or_create(sn=line[0], bcode=line[1], category=getIndex(categorys, line[2]),
-                                              status=getIndex(status, line[3]), project=getIndex(projects, line[9]),
-                                              functeam=" ", po_requestor=line[11],
-                                              location=getIndex(locations, line[7]),
-                                              po=line[10], actual_user=line[4], borrow_wwid=line[5],
-                                              comments=line[8], update_at=datetime.now(), create_at=datetime.now())
-            except Exception as e:
-                print(getIndex(categorys, line[3]))
-                print(e)
-                print(line)
-
+            # try:
+            #     Devices.objects.get_or_create(sn=line[0], bcode=line[1], category=obj_get(Status, line[2], 1),
+            #                                   status=obj_get(Status, line[3], 2), project=obj_get(Status, line[9], 4),
+            #                                   functeam=" ", po_requestor=line[11],
+            #                                   location = obj_get(Status, line[7], 3), 
+            #                                   po=line[10], actual_user=line[4], borrow_wwid=line[5],
+            #                                   comments=line[8], update_at=datetime.now(), create_at=datetime.now())
+            # except Exception as e:
+            #     print(line)
+            #     print(e)
+            Devices.objects.get_or_create(sn=line[0], bcode=line[1], category=obj_get(Status, line[2], 1),
+                                            status=obj_get(Status, line[3], 2), project=obj_get(Status, line[9], 4),
+                                            po_requestor=line[11],
+                                            location = obj_get(Status, line[7], 3), 
+                                            po=line[10], actual_user=line[4], borrow_wwid=line[5],
+                                            comments=line[8], update_at=datetime.now(), create_at=datetime.now())
 
 if __name__ == "__main__":
     initStatus("1.xlsx ")

@@ -81,17 +81,17 @@
         </tr>
         {% for device in devices %}
         <tr >
-          <td class="text-center">{{ device.sn}} </td>
-          <td class="text-center">{{ device.bcode}} </td>
+          <td class="text-center">{{ device.sn  | default_if_none:""}} </td>
+          <td class="text-center">{{ device.bcode | default_if_none:""}} </td>
           <td class="text-center">{{ device.category }} </td>
           <td class="text-center">{{ device.status }} </td>
           <td class="text-center">{{ device.project}} </td>
-          <td class="text-center">{{ device.borrow_wwid }} </td>
-          <td class="text-center">{{ device.actual_user }} </td>
-          <td class="text-center">{{ device.po_requestor }} </td>
+          <td class="text-center">{{ device.borrow_wwid  | default_if_none:"" }} </td>
+          <td class="text-center">{{ device.actual_user  | default_if_none:""}} </td>
+          <td class="text-center">{{ device.po_requestor  | default_if_none:""}} </td>
           <td class="text-center">{{ device.location }} </td>
           <td class="text-center">{{ device.update_at}} </td>
-          <td class="text-center">{{ device.comments}}  {{ device.po }}</td>
+          <td class="text-center">{{ device.comments  | default_if_none:""}}  {{ device.po  | default_if_none:"" }}</td>
         </tr>
         {% endfor %}
       </table>
