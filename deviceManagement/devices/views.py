@@ -94,3 +94,9 @@ def status(request):
     for index, d in enumerate(data, 1):
         tmp.append({"id": index, "name": d})
     return JsonResponse(tmp, safe=False)
+
+
+def devicesAll(request):
+    devices = Devices.objects.all().values()
+    devices = list(devices)
+    return JsonResponse(devices, safe=False)

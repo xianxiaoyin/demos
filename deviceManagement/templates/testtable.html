@@ -15,9 +15,20 @@
     <title>test</title>
 </head>
 <body>
+<div class="row">
+      <div class="col-xs-6 col-md-4">
+        <h1 class="text-center">PID Device List</h1>
+      </div>
+     <div class="col-xs-6 col-md-4 ">
+        <p class="text-left">Export EXCEL.</p>
+        <input type="file" name="txt_file" id="txt_file" multiple class="file-loading " />
+      </div>
+    </div>
+
+
+
 <div id="toolbar"></div>
 <table id="tb_user">
-
 </table>
 
 <script>
@@ -25,42 +36,43 @@
         $("#tb_user").bootstrapTable({
             toolbar: "#toolbar",
             idField: "Id",
-            pagination: true,
-            showRefresh: true,
+            striped : false, //是否显示行间隔色
+            pageNumber : 1, //初始化加载第一页
+            pagination : true,//是否分页
+            sidePagination : 'client',//server:服务器端分页|client：前端分页
+            pageSize : 2,//单页记录数
+            pageList : [ 5, 10, 20, 30 ,50],//可选择单页记录数
+            sortable: true,                     //是否启用排序
+            sortOrder: "asc",                   //排序方式
+            showRefresh: false,
             search: true,
             clickToSelect: true,
             queryParams: function (param) {
                 return {};
             },
-            url: "/static/data.json",
+            url: "/all",
             columns: [{
                 checkbox: true
             }, {
-                field: "UserName",
-                title: "用户名",
+                field: "sn",
+                title: "sn",
                 editable: {
                     type: 'text',
-                    title: '用户名',
-                    validate: function (v) {
-                        if (!v) return '用户名不能为空';
-
-                    }
+                    title: 'sn',
                 }
             }, {
-                field: "Age",
-                title: "年龄",
-            },             {
-                field: "Birthday",
-                title: "生日",
-            },
-
-
-                　　　　　　　　{
-                field: "DeptId",
-                title: "部门",
+                field: "bcode",
+                title: "bcode",
+                editable: {
+                    type: 'text',
+                    title: 'bcode',
+                }
+            }, {
+                field: "category_id",
+                title: "category",
                 editable: {
                     type: 'select',
-                    title: '部门',
+                    title: 'category',
                     source: function () {
                         var result = [];
                         $.ajax({
@@ -69,7 +81,6 @@
                             type: "get",
                             data: {},
                             success: function (data, status) {
-                                {#data = JSON.parse(data);#}
                                 console.log(data)
                                 $.each(data, function (key, value) {
                                     result.push({ value: value.id, text: value.name });
@@ -79,7 +90,10 @@
                         return result;
                     }
                 }
-            }
+            },{
+                field: "update_at",
+                title: "update",
+            },
 
 
             ],
