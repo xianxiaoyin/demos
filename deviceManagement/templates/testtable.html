@@ -12,43 +12,54 @@
     <script src="/static/bootstrap-table/bootstrap-table.min.js" ></script>
     <script src="/static/bootstrap-table/locale/bootstrap-table-en-US.min.js" ></script>
     <script src="/static/bootstrap-table/extensions/editable/bootstrap-table-editable.min.js" ></script>
-    <title>test</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/js/fileinput.min.js"></script>
+
+
+    <title>PID Device List</title>
 </head>
 <body>
 <div class="row">
       <div class="col-xs-6 col-md-4">
         <h1 class="text-center">PID Device List</h1>
       </div>
+
      <div class="col-xs-6 col-md-4 ">
         <p class="text-left">Export EXCEL.</p>
-        <input type="file" name="txt_file" id="txt_file" multiple class="file-loading " />
+        <input type="file" name="txt_file" id="txt_file" multiple class="file-loading" />
       </div>
-    </div>
-
+</div>
 
 
 <div id="toolbar"></div>
+
 <table id="tb_user">
 </table>
 
+<script src="/static/main.js"></script>
 <script>
-  $(function () {
+   $(function () {
         $("#tb_user").bootstrapTable({
             toolbar: "#toolbar",
             idField: "Id",
-            striped : false, //是否显示行间隔色
+            striped : true, //是否显示行间隔色
             pageNumber : 1, //初始化加载第一页
             pagination : true,//是否分页
             sidePagination : 'client',//server:服务器端分页|client：前端分页
-            pageSize : 2,//单页记录数
+            pageSize : 20,//单页记录数
             pageList : [ 5, 10, 20, 30 ,50],//可选择单页记录数
             sortable: true,                     //是否启用排序
             sortOrder: "asc",                   //排序方式
-            showRefresh: false,
+            showRefresh: true,
+            showColumns: true,                 // 是否显示所有列
+             showToggle:true,                    //是否显示详细视图和列表视图的切换按钮
             search: true,
             clickToSelect: true,
             queryParams: function (param) {
-                return {};
+                queryParamsType = 'search'
+                return {
+                    memberId: $("#searchString_id").val()
+                };
             },
             url: "/all",
             columns: [{
@@ -76,12 +87,77 @@
                     source: function () {
                         var result = [];
                         $.ajax({
+                            url: '/status?tag=1',
+                            async: false,
+                            type: "get",
+                            data: {},
+                            success: function (data, status) {
+                                $.each(data, function (key, value) {
+                                    result.push({ value: value.id, text: value.name });
+                                });
+                            }
+                        });
+                        return result;
+                    }
+                }
+            }, {
+                field: "project_id",
+                title: "project",
+                editable: {
+                    type: 'select',
+                    title: 'project',
+                    source: function () {
+                        var result = [];
+                        $.ajax({
+                            url: '/status?tag=4',
+                            async: false,
+                            type: "get",
+                            data: {},
+                            success: function (data, status) {
+                                $.each(data, function (key, value) {
+                                    result.push({ value: value.id, text: value.name });
+                                });
+                            }
+                        });
+                        return result;
+                    }
+                }
+            },  {
+                field: "location_id",
+                title: "location",
+                editable: {
+                    type: 'select',
+                    title: 'location',
+                    source: function () {
+                        var result = [];
+                        $.ajax({
+                            url: '/status?tag=3',
+                            async: false,
+                            type: "get",
+                            data: {},
+                            success: function (data, status) {
+                                $.each(data, function (key, value) {
+                                    result.push({ value: value.id, text: value.name });
+                                });
+                            }
+                        });
+                        return result;
+                    }
+                }
+            }, {
+                field: "status_id",
+                title: "status",
+                editable: {
+                    type: 'select',
+                    title: 'status',
+                    source: function () {
+                        var result = [];
+                        $.ajax({
                             url: '/status?tag=2',
                             async: false,
                             type: "get",
                             data: {},
                             success: function (data, status) {
-                                console.log(data)
                                 $.each(data, function (key, value) {
                                     result.push({ value: value.id, text: value.name });
                                 });
@@ -91,24 +167,45 @@
                     }
                 }
             },{
+                field: "po_requestor",
+                title: "po_requestor ",
+            }, {
+                field: "borrow_wwid",
+                title: "borrow_wwid ",
+            },
+                {
+                field: "actual_user",
+                title: "actual_user ",
+            },
+                {
+                field: "po",
+                title: "po",
+            }, {
+                field: "comments",
+                title: "comments",
+            },
+                {
                 field: "update_at",
                 title: "update",
-            },
-
-
+            }
             ],
             onEditableSave: function (field, row, oldValue, $el) {
+                console.log(field);
+                console.log(row);
+                console.log(oldValue);
                 $.ajax({
                     type: "post",
-                    url: "",
+                    url: "/edit",
                     data: row,
                     dataType: 'JSON',
                     success: function (data, status) {
+                            console.log(data, status);
+
                         if (status == "success") {
                             console.log('提交数据成功');
                         }
                     },
-                    error: function () {
+                    error: function (data) {
                         console.log('编辑失败');
                     },
                     complete: function () {

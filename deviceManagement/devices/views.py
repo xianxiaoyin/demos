@@ -11,11 +11,20 @@ from django.http import HttpResponse, JsonResponse
 from .models import Devices, Status
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+import json
+
+def Index(request):
+    return render(request, "testtable.html")
 
 
 #  更新设别信息
 def deviceEdit(request):
-    return render(request, "testtable.html")
+    if request.method == 'POST':
+        data = request.POST
+        a = json.loads(json.dumps(data))
+        uuid = a.pop("id")
+        Devices.objects.filter(id=uuid).update(**a)
+        return JsonResponse({"status": "success"}, safe=False)
 
 
 # 搜索页面
@@ -87,16 +96,14 @@ def uploadExcel(request):
 # 获取状态
 
 def status(request):
-    tmp = []
     tag = request.GET.get("tag")
-    data = Status.objects.filter(tag=tag).values_list("name", flat=True)
+    data = Status.objects.filter(tag=tag).values()
     data = list(data)
-    for index, d in enumerate(data, 1):
-        tmp.append({"id": index, "name": d})
-    return JsonResponse(tmp, safe=False)
+    return JsonResponse(data, safe=False)
 
 
 def devicesAll(request):
+    print(request.GET.get("searchString_id"))
     devices = Devices.objects.all().values()
     devices = list(devices)
     return JsonResponse(devices, safe=False)

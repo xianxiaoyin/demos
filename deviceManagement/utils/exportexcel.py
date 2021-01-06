@@ -6,7 +6,6 @@ Date: 2020-12-27 17:45:18
 LastEditTime: 2021-01-05 18:49:49
 '''
 
-
 import openpyxl
 from devices.models import Devices, Status
 from datetime import datetime
@@ -33,31 +32,36 @@ def initStatus(filename):
     for line in readExcel(filename)[1:]:
         if line[2]:
             try:
-                Status.objects.update_or_create(name=line[2], tag="1", update_at=datetime.now(), create_at=datetime.now())
+                Status.objects.update_or_create(name=line[2], tag="1", update_at=datetime.now(),
+                                                create_at=datetime.now())
             except Exception as e:
                 print(e)
                 print(line)
         if line[3]:
             try:
-                Status.objects.update_or_create(name=line[3], tag="2", update_at=datetime.now(), create_at=datetime.now())
+                Status.objects.update_or_create(name=line[3], tag="2", update_at=datetime.now(),
+                                                create_at=datetime.now())
             except Exception as e:
                 print(e)
                 print(line)
         if line[7]:
             try:
-                Status.objects.update_or_create(name=line[7], tag="3", update_at=datetime.now(), create_at=datetime.now())
+                Status.objects.update_or_create(name=line[7], tag="3", update_at=datetime.now(),
+                                                create_at=datetime.now())
             except Exception as e:
                 print(e)
                 print(line)
         if line[9]:
             try:
-                Status.objects.update_or_create(name=line[9], tag="4", update_at=datetime.now(), create_at=datetime.now())
+                Status.objects.update_or_create(name=line[9], tag="4", update_at=datetime.now(),
+                                                create_at=datetime.now())
             except Exception as e:
                 print(e)
                 print(line)
         if line[10]:
             try:
-                Status.objects.update_or_create(name=line[10], tag="5", update_at=datetime.now(), create_at=datetime.now())
+                Status.objects.update_or_create(name=line[10], tag="5", update_at=datetime.now(),
+                                                create_at=datetime.now())
             except Exception as e:
                 print(e)
                 print(line)
@@ -65,17 +69,15 @@ def initStatus(filename):
 
 def obj_get(obj, name, tag):
     try:
-        return obj.objects.get(name = name, tag = tag)
+        return obj.objects.get(name=name, tag=tag)
     except Exception as e:
         print("not found")
-        return 111 
+        print("Error data :  {} --->>> {}".format(name, tag))
 
 
 
 def saveData(filename):
-    obj = []
     for line in readExcel(filename)[1:]:
-        if line[3]:
             # obj.append(Devices(sn=line[1], bcode=line[2], category=getIndex(categorys, line[3]),
             #             status=getIndex(status, line[4]), project=getIndex(projects, line[5]),
             #             functeam=getIndex(functeams, line[6]),location=getIndex(locations, line[7]),
@@ -93,11 +95,12 @@ def saveData(filename):
             #     print(line)
             #     print(e)
             Devices.objects.get_or_create(sn=line[0], bcode=line[1], category=obj_get(Status, line[2], 1),
-                                            status=obj_get(Status, line[3], 2), project=obj_get(Status, line[9], 4),
-                                            po_requestor=line[11],
-                                            location = obj_get(Status, line[7], 3), 
-                                            po=line[10], actual_user=line[4], borrow_wwid=line[5],
-                                            comments=line[8], update_at=datetime.now(), create_at=datetime.now())
+                                          status=obj_get(Status, line[3], 2), project=obj_get(Status, line[9], 4),
+                                          po_requestor=line[11],
+                                          location=obj_get(Status, line[7], 3),
+                                          po=line[10], actual_user=line[4], borrow_wwid=line[5],
+                                          comments=line[8], update_at=datetime.now(), create_at=datetime.now())
+
 
 if __name__ == "__main__":
     initStatus("1.xlsx ")
