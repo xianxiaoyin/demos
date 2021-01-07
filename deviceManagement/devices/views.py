@@ -12,9 +12,19 @@ from .models import Devices, Status
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import json
+import datetime
 
 def Index(request):
-    return render(request, "testtable.html")
+    filename = request.FILES.get("excelfile")
+    print("---->>> {}".format(filename))
+    if filename:
+        from utils.exportexcel import saveData, initStatus
+        # initStatus(filename)
+        saveData(filename)
+        return render(request, "testtable.html", {"msg": "file upload successful"})
+    else:
+        # return render(request, "testtable.html", {"msg": "file upload error"})
+        return render(request, "testtable.html")
 
 
 #  更新设别信息
@@ -22,6 +32,8 @@ def deviceEdit(request):
     if request.method == 'POST':
         data = request.POST
         a = json.loads(json.dumps(data))
+        a["update_at"] = datetime.datetime.now()
+        print(a)
         uuid = a.pop("id")
         Devices.objects.filter(id=uuid).update(**a)
         return JsonResponse({"status": "success"}, safe=False)
@@ -82,15 +94,14 @@ def deviceFilter(request):
 
 
 def uploadExcel(request):
-    filename = request.FILES.get("txt_file")
-    print(filename)
+    filename = request.FILES.get("excelfile")
     if filename:
         from utils.exportexcel import saveData, initStatus
         # initStatus(filename)
         saveData(filename)
-        return HttpResponse({"msg": "successful"})
+        return render(request, "testtable.html", {"msg": "file upload successful"})
     else:
-        return HttpResponse({"msg": "error"})
+        return render(request, "testtable.html", {"msg": "file upload error"})
 
 
 # 获取状态

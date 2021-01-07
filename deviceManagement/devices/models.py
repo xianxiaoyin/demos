@@ -47,7 +47,7 @@ class Devices(models.Model):
     borrow_wwid = models.CharField(verbose_name="borrow_wwid", max_length=20, null=True, blank=True)
     po_requestor = models.CharField(verbose_name=" po_requestor", max_length=20, null=True, blank=True)
     comments = models.TextField(verbose_name="comments", null=True, blank=True)
-    update_at = models.DateTimeField(verbose_name="update time", default=datetime.now)
+    update_at = models.DateTimeField(verbose_name="update time", auto_now=True)
     create_at = models.DateTimeField(verbose_name="create time", auto_now_add=True)
 
     class Meta:
