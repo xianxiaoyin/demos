@@ -101,15 +101,15 @@
                     }
                 }
             }, {
-                field: "project_id",
-                title: "project",
+                field: "status_id",
+                title: "status",
                 editable: {
                     type: 'select',
-                    title: 'project',
+                    title: 'status',
                     source: function () {
                         var result = [];
                         $.ajax({
-                            url: '/status?tag=4',
+                            url: '/status?tag=2',
                             async: false,
                             type: "get",
                             data: {},
@@ -122,6 +122,24 @@
                         return result;
                     }
                 }
+            }, {
+                field: "actual_user",
+                title: "actual_user ",
+                editable: {
+                    type: 'text',
+                    title: 'bcode',
+                }
+            }, {
+                field: "borrow_wwid",
+                title: "borrow_wwid ",
+                editable: {
+                    type: 'text',
+                    title: 'bcode',
+                }
+            },
+                {
+                field: "update_at",
+                title: "update",
             },  {
                 field: "location_id",
                 title: "location",
@@ -145,15 +163,22 @@
                     }
                 }
             }, {
-                field: "status_id",
-                title: "status",
+                field: "comments",
+                title: "details",
+                editable: {
+                    type: 'text',
+                    title: 'bcode',
+                }
+            },{
+                field: "project_id",
+                title: "project",
                 editable: {
                     type: 'select',
-                    title: 'status',
+                    title: 'project',
                     source: function () {
                         var result = [];
                         $.ajax({
-                            url: '/status?tag=2',
+                            url: '/status?tag=4',
                             async: false,
                             type: "get",
                             data: {},
@@ -166,28 +191,15 @@
                         return result;
                     }
                 }
+            }, 
+                {
+                field: "po",
+                title: "po#",
             },{
                 field: "po_requestor",
                 title: "po_requestor ",
-            }, {
-                field: "borrow_wwid",
-                title: "borrow_wwid ",
-            },
-                {
-                field: "actual_user",
-                title: "actual_user ",
-            },
-                {
-                field: "po",
-                title: "po",
-            }, {
-                field: "comments",
-                title: "comments",
-            },
-                {
-                field: "update_at",
-                title: "update",
             }
+              
             ],
             onEditableSave: function (field, row, oldValue, $el) {
                 console.log(field);
