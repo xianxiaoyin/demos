@@ -3125,7 +3125,8 @@
 	  rowAttributes: function rowAttributes(row, index) {
 	    return {};
 	  },
-	  undefinedText: '-',
+	  <!-- undefinedText: '-', -->
+	  undefinedText: '',
 	  locale: undefined,
 	  virtualScroll: false,
 	  virtualScrollItemHeight: undefined,

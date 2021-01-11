@@ -4,7 +4,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-19 12:30:13
-LastEditTime: 2021-01-05 18:24:07
+LastEditTime: 2021-01-11 09:42:54
 '''
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse

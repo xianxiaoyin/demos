@@ -9,13 +9,13 @@
     <script src="/static/jquery/jquery-3.5.1.min.js"></script>
     <script src="/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <script src="/static/x-editable/bootstrap3-editable/js/bootstrap-editable.min.js" ></script>
-    <script src="/static/bootstrap-table/bootstrap-table.min.js" ></script>
+    <script src="/static/bootstrap-table/bootstrap-table.js" ></script>
     <script src="/static/bootstrap-table/locale/bootstrap-table-en-US.min.js" ></script>
     <script src="/static/bootstrap-table/extensions/editable/bootstrap-table-editable.min.js" ></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/js/fileinput.min.js"></script>
 
-
+ 
     <title>PID Device List</title>
 </head>
 <body>
@@ -28,12 +28,12 @@
 {#    上传excel开始的地方#}
 
     <div class="col-md-4">
-        <form method="post" action="/" enctype="multipart/form-data">
+        <form method="post" action="/" enctype="multipart/form-data" id="videoForm">
         <div class="form-group">
             <label for="exampleInputFile">Export EXCEL</label>
             <input type="file" id="exampleInputFile" name="excelfile">
          </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button  type="submit" class="btn btn-default">Submit</button>
         <span><font color="red">{{ msg | default_if_none:"" }} </font></span>
         </form>
     </div>
@@ -53,6 +53,12 @@
 </table>
 <script src="/static/main.js"></script>
 <script>
+
+    {% comment %} 按F5不会提交表单 {% endcomment %}
+     if ( window.history.replaceState ) {
+                window.history.replaceState( null, null, window.location.href );
+            }
+
    $(function () {
         $("#tb_user").bootstrapTable({
             toolbar: "#toolbar",
@@ -220,9 +226,6 @@
             }
             ],
             onEditableSave: function (field, row, oldValue, $el) {
-                console.log(field);
-                console.log(row);
-                console.log(oldValue);
                 $.ajax({
                     type: "post",
                     url: "/edit",
@@ -250,7 +253,8 @@
                     url: "/devices"
                 });
             })
+
     });
 </script>
 </body>
-</html>
+</html> 
