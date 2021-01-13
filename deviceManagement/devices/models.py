@@ -4,7 +4,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-19 12:30:13
-LastEditTime: 2021-01-05 18:50:05
+LastEditTime: 2021-01-13 15:07:28
 '''
 from django.db import models
 from datetime import datetime
@@ -56,3 +56,15 @@ class Devices(models.Model):
 
     def __str__(self):
         return "%s" % self.sn
+
+
+# 借用记录---记录每次数据更新之人员变动信息
+
+class HistoryUser(models.Model):
+    device_number = models.IntegerField(verbose_name="devices ID")
+    change_user = models.CharField(verbose_name="change username" ,max_length=20)
+    create_at = models.DateTimeField(verbose_name="create time", auto_now_add=True)
+    class Meta:
+        db_table = "historyuser"
+    def __str__(self):
+        return self.name

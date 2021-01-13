@@ -4,11 +4,11 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-19 12:30:13
-LastEditTime: 2021-01-11 09:42:54
+LastEditTime: 2021-01-13 15:21:40
 '''
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from .models import Devices, Status
+from .models import Devices, Status, HistoryUser
 from django.db.models import Q
 import json
 import datetime
@@ -33,6 +33,14 @@ def deviceEdit(request):
         a = json.loads(json.dumps(data))
         a["update_at"] = datetime.datetime.now()
         uuid = a.pop("id")
+        # 如果更新了actual_user字段，把更新记录存储到HistoryUser表中
+        oldDevices = Devices.objects.get(id=uuid)
+        if oldDevices.actual_user != a["actual_user"]:
+            HistoryUser.objects.create(
+                    device_number = uuid,
+                    change_user = a["actual_user"]
+            )
+
         Devices.objects.filter(id=uuid).update(**a)
         return JsonResponse({"status": "success"}, safe=False)
 
@@ -67,3 +75,13 @@ def devices(request):
         devices = Devices.objects.all().order_by("-update_at").values()
     devices = list(devices)
     return JsonResponse(devices, safe=False)
+
+
+# 获取当前设备的借用记录
+
+def historyuser(request, number):
+    if number:
+        data = HistoryUser.objects.filter(device_number=number).order_by("-create_at").values()
+    else:
+        data = {}
+    return JsonResponse(list(data), safe=False)
