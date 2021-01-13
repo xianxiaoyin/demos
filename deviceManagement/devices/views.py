@@ -4,7 +4,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-19 12:30:13
-LastEditTime: 2021-01-13 15:21:40
+LastEditTime: 2021-01-13 16:43:40
 '''
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
@@ -21,9 +21,9 @@ def Index(request):
         from utils.exportexcel import saveData, initStatus
         # initStatus(filename)
         saveData(filename)
-        return render(request, "testtable.html", {"msg": "file upload successful"})
+        return render(request, "index.html", {"msg": "file upload successful"})
     else:
-        return render(request, "testtable.html")
+        return render(request, "index.html")
 
 
 #  更新设别信息
@@ -31,14 +31,18 @@ def deviceEdit(request):
     if request.method == 'POST':
         data = request.POST
         a = json.loads(json.dumps(data))
+        try:
+            del a["0"]
+        except Exception as e:
+            print("why 0 ?")
         a["update_at"] = datetime.datetime.now()
         uuid = a.pop("id")
         # 如果更新了actual_user字段，把更新记录存储到HistoryUser表中
         oldDevices = Devices.objects.get(id=uuid)
-        if oldDevices.actual_user != a["actual_user"]:
+        if  oldDevices.actual_user and oldDevices.actual_user != a["actual_user"]  :
             HistoryUser.objects.create(
                     device_number = uuid,
-                    change_user = a["actual_user"]
+                    change_user = oldDevices.actual_user
             )
 
         Devices.objects.filter(id=uuid).update(**a)
@@ -52,9 +56,9 @@ def uploadExcel(request):
         from utils.exportexcel import saveData, initStatus
         # initStatus(filename)
         saveData(filename)
-        return render(request, "testtable.html", {"msg": "file upload successful"})
+        return render(request, "index.html", {"msg": "file upload successful"})
     else:
-        return render(request, "testtable.html", {"msg": "file upload error"})
+        return render(request, "index.html", {"msg": "file upload error"})
 
 
 # 获取状态
@@ -81,7 +85,8 @@ def devices(request):
 
 def historyuser(request, number):
     if number:
-        data = HistoryUser.objects.filter(device_number=number).order_by("-create_at").values()
+        data = HistoryUser.objects.filter(device_number=number).order_by("-create_at")
     else:
         data = {}
-    return JsonResponse(list(data), safe=False)
+    # return JsonResponse(list(data), safe=False)
+    return render(request, "history.html", {"data": data})
