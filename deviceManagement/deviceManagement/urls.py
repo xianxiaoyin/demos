@@ -3,7 +3,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-19 12:28:05
-LastEditTime: 2021-01-13 15:20:28
+LastEditTime: 2021-01-14 10:28:21
 '''
 """deviceManagement URL Configuration
 
@@ -22,12 +22,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from devices.views import uploadExcel, deviceEdit, status, devices, Index, historyuser
+from devices.views import deviceEdit, status, devices, Index, historyuser
 
 
 urlpatterns = [
     path('', Index),
-    path('upload', uploadExcel),
     path('status', status),
     path('devices', devices),
     path('edit', deviceEdit),

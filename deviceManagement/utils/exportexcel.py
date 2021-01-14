@@ -3,7 +3,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-27 17:45:18
-LastEditTime: 2021-01-05 18:49:49
+LastEditTime: 2021-01-14 10:21:06
 '''
 
 import openpyxl
@@ -30,6 +30,7 @@ def readExcel(filename="1.xlsx"):
 def initStatus(filename):
     obj = []
     for line in readExcel(filename)[1:]:
+        print(line)
         if line[2]:
             try:
                 Status.objects.update_or_create(name=line[2], tag="1", update_at=datetime.now(),
