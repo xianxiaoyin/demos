@@ -82,7 +82,7 @@ DATABASES = {
         'NAME': 'devices',
         'USER': 'admin',
         'PASSWORD': '123456',
-        'HOST': '10.239.183.2',
+        'HOST': 'db',
         'PORT': '3306',
     }
 }
