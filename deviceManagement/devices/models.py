@@ -4,7 +4,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-19 12:30:13
-LastEditTime: 2021-01-13 15:07:28
+LastEditTime: 2021-01-15 10:13:57
 '''
 from django.db import models
 from datetime import datetime
@@ -42,10 +42,10 @@ class Devices(models.Model):
     project = models.ForeignKey(Status, on_delete=SET_NULL, blank=True, null=True, related_name="project")
     functeam = models.ForeignKey(Status, on_delete=SET_NULL, blank=True, null=True, related_name="functeam",default="")
     location = models.ForeignKey(Status, on_delete=SET_NULL, blank=True, null=True, related_name="location")
-    po = models.CharField(verbose_name="PO#", max_length=20, null=True, blank=True)
-    actual_user = models.CharField(verbose_name="actual_user", max_length=20, null=True, blank=True)
-    borrow_wwid = models.CharField(verbose_name="borrow_wwid", max_length=20, null=True, blank=True)
-    po_requestor = models.CharField(verbose_name=" po_requestor", max_length=20, null=True, blank=True)
+    po = models.CharField(verbose_name="PO#", max_length=50, null=True, blank=True)
+    actual_user = models.CharField(verbose_name="actual_user", max_length=50, null=True, blank=True)
+    borrow_wwid = models.CharField(verbose_name="borrow_wwid", max_length=50, null=True, blank=True)
+    po_requestor = models.CharField(verbose_name=" po_requestor", max_length=50, null=True, blank=True)
     comments = models.TextField(verbose_name="comments", null=True, blank=True)
     update_at = models.DateTimeField(verbose_name="update time", auto_now=True)
     create_at = models.DateTimeField(verbose_name="create time", auto_now_add=True)
