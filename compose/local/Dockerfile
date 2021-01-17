@@ -1,6 +1,6 @@
 FROM rackspacedot/python37:latest
 
-RUN pip install django openpyxl  -i http://mirrors.aliyun.com/pypi/simple --trusted-host mirrors.aliyun.com --proxy=http://child-prc.intel.com:913
+RUN pip install django openpyxl  -i http://mirrors.aliyun.com/pypi/simple --trusted-host mirrors.aliyun.com
 
 RUN mkdir -p /root/devices
 

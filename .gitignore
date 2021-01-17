@@ -2,5 +2,4 @@
 *.pyc
 __pycache__
 .vscode/launch.json
-deviceManagement/db.sqlite3
 deviceManagement/.vscode/launch.json
