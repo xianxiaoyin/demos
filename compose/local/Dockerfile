@@ -8,6 +8,6 @@ COPY deviceManagement   /root/devices/deviceManagement
 
 WORKDIR /root/devices/deviceManagement
 
-COPY ./compose/local/start.sh  /start.sh
+COPY ./compose/local/start.sh  /root/devices/deviceManagement/start.sh
 
-RUN chmod +x /start.sh
+RUN chmod +x /root/devices/deviceManagement/start.sh
