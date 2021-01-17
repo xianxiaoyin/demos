@@ -1,0 +1,24 @@
+version: '3'
+
+volumes:
+  static:
+
+services:
+  django-python3:
+    build:
+      context: .
+      dockerfile: compose/local/Dockerfile
+    image: dp
+    container_name: dp
+    working_dir: /root/devices/deviceManagement
+    volumes:
+      - static:/root/devices/deviceManagement/static
+    ports:
+      - 127.0.0.1:8000:8000
+    command: /start.sh
+
+networks:
+  default:
+    external:
+      name:  nginx-jenkins
+
