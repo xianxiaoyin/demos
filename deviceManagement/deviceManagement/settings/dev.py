@@ -1,6 +1,5 @@
 # coding: utf-8
 from .base import *
-SECRET_KEY = '1234 '
 DEBUG = True
 DATABASES = {
     'default': {
