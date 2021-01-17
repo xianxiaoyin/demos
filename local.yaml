@@ -14,7 +14,7 @@ services:
     volumes:
       - static:/root/devices/deviceManagement/static
     ports:
-      - 8000:8000
+      - 9000:9000
     command: /root/devices/deviceManagement/start.sh
 
 networks:
