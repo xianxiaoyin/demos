@@ -31,22 +31,71 @@ def deviceEdit(request):
     if request.method == 'POST':
         data = request.POST
         a = json.loads(json.dumps(data))
+        print(a)
+
         try:
             del a["0"]
         except Exception as e:
             print("why 0 ?")
         a["update_at"] = datetime.datetime.now()
         uuid = a.pop("id")
-        # 如果更新了actual_user字段，把更新记录存储到HistoryUser表中
         oldDevices = Devices.objects.get(id=uuid)
-        if  oldDevices.actual_user and oldDevices.actual_user != a["actual_user"]  :
-            HistoryUser.objects.create(
-                    device_number = uuid,
-                    change_user = oldDevices.actual_user
-            )
+        print('---->', oldDevices)
+        # 如果更新了actual_user字段，把更新记录存储到HistoryUser表中
+        _, created = Devices.objects.get_or_create(sn=a["sn"])
 
-        Devices.objects.filter(id=uuid).update(**a)
-        return JsonResponse({"status": "success"}, safe=False)
+        if not created:
+            oldDevices = Devices.objects.get(id=uuid)
+            print('---->', oldDevices)
+            try:
+                if oldDevices.actual_user and oldDevices.actual_user != a["actual_user"]:
+                    HistoryUser.objects.create(
+                            device_number=uuid,
+                            actual_user=oldDevices.actual_user
+                    )
+                if oldDevices.bcode and oldDevices.bcode != a["bcode"]:
+                    HistoryUser.objects.create(
+                            device_number=uuid,
+                            bcode=oldDevices.bcode
+                    )
+                if oldDevices.category and oldDevices.category != a["category"]:
+                    HistoryUser.objects.create(
+                            device_number=uuid,
+                            category=oldDevices.category
+                    )
+                if oldDevices.status and oldDevices.status != a["status"]:
+                    HistoryUser.objects.create(
+                            device_number=uuid,
+                            status=oldDevices.status
+                    )
+                if oldDevices.project and oldDevices.project != a["project"]:
+                    HistoryUser.objects.create(
+                            device_number=uuid,
+                            project=oldDevices.project
+                    )
+                if oldDevices.location and oldDevices.location != a["location"]:
+                    HistoryUser.objects.create(
+                            device_number=uuid,
+                            location=oldDevices.location
+                    )
+
+                if oldDevices.borrow_wwid and oldDevices.borrow_wwid != a["borrow_wwid"]:
+                    HistoryUser.objects.create(
+                            device_number=uuid,
+                            borrow_wwid=oldDevices.borrow_wwid
+                    )
+                if oldDevices.comments and oldDevices.comments != a["comments"]:
+                    HistoryUser.objects.create(
+                        device_number=uuid,
+                        comments=oldDevices.comments
+                    )
+            except Exception as e:
+                print(e)
+
+            Devices.objects.filter(sn=a["sn"]).update(**a)
+            return JsonResponse({"status": "update success"}, safe=False)
+        else:
+            return JsonResponse({"status": "create success"}, safe=False)
 
 
 
@@ -78,18 +127,15 @@ def historyuser(request, number):
         data = HistoryUser.objects.filter(device_number=number).order_by("-create_at")
     else:
         data = {}
-    # return JsonResponse(list(data), safe=False)
     return render(request, "history.html", {"data": data})
 
+
 # 删除数据
-def deletes(request):
+def delete(request):
     if request.method == 'DELETE':
-        ids1 = request.POST
-        print(ids1) 
-        ids = request.body.decode("utf-8")
-        print(ids)
+        ids = json.loads(request.body.decode("utf-8")).get("ids", "")
         for i in ids:
-            print(i)
-            HistoryUser.objects.filter(tag=i).delete()
+            HistoryUser.objects.filter(device_number=i).delete()
             Devices.objects.filter(id=i).delete()
         return JsonResponse({"msg": "successful"}, safe=False)
+

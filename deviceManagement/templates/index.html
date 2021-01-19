@@ -54,7 +54,8 @@
 </div >
 
 <div id="toolbar">
-<button onclick="deleteSelects()">delete</button> 
+<button onclick="deleteSelects()">delete</button>
+<button onclick="create()">create</button>
 </div>
 <table id="tb_user">
 </table>
@@ -73,6 +74,19 @@ function DoOnMsoNumberFormat(cell, row, col) {
             result = "\\@";
         return result;
     }
+
+    function create()
+     {
+      var obj=$('#tb_user');
+      obj.bootstrapTable('insertRow', {
+        index: 0,
+        row: {
+        id: 100,
+        }
+       });
+     }
+
+
  function deleteSelects()
       {
         var obj=$('#tb_user');
@@ -80,12 +94,14 @@ function DoOnMsoNumberFormat(cell, row, col) {
                 console.log(row)
                 return row.id
                 });
+        let selectionIds = {};
+        selectionIds.ids = ids;
         $.ajax({
-                url: '/deletes',
-                async: true,
+                url: '/delete',
+                async: false,
                 type: "delete",
                 dataType: "json",
-                data: {'ids': ids},
+                data: JSON.stringify(selectionIds),
                 success: function (data) {
                     obj.bootstrapTable('remove', {field: 'id',values: ids });
                 }

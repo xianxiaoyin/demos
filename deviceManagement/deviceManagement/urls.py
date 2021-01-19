@@ -22,7 +22,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from devices.views import deviceEdit, status, devices, Index, historyuser, deletes
+from devices.views import deviceEdit, status, devices, Index, historyuser, delete
 
 
 urlpatterns = [
@@ -30,8 +30,7 @@ urlpatterns = [
     path('status', status),
     path('devices', devices),
     path('edit', deviceEdit),
-    path('deletes', deletes),
+    path('delete', delete),
     path('history/<int:number>', historyuser),
-    
     path('admin/', admin.site.urls),
 ]

@@ -62,9 +62,16 @@ class Devices(models.Model):
 
 class HistoryUser(models.Model):
     device_number = models.IntegerField(verbose_name="devices ID")
-    change_user = models.CharField(verbose_name="change username" ,max_length=20)
+    bcode = models.CharField(verbose_name="change username", max_length=50, null=True, blank=True)
+    category = models.CharField(verbose_name="change category", max_length=50, null=True, blank=True)
+    status = models.CharField(verbose_name="change status", max_length=50, null=True, blank=True)
+    project = models.CharField(verbose_name="change project", max_length=50, null=True, blank=True)
+    location = models.CharField(verbose_name="change location", max_length=50, null=True, blank=True)
+    actual_user = models.CharField(verbose_name="change actual_user", max_length=50, null=True, blank=True)
+    borrow_wwid = models.CharField(verbose_name="change borrow_wwid", max_length=50, null=True, blank=True)
+    comments = models.CharField(verbose_name="change comments", max_length=50, null=True, blank=True)
     create_at = models.DateTimeField(verbose_name="create time", auto_now_add=True)
     class Meta:
         db_table = "historyuser"
     def __str__(self):
-        return self.name
+        return "{}".format(self.device_number)
