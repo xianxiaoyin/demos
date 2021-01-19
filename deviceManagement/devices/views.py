@@ -4,7 +4,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-19 12:30:13
-LastEditTime: 2021-01-19 13:09:08
+LastEditTime: 2021-01-19 16:45:56
 '''
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
@@ -80,3 +80,16 @@ def historyuser(request, number):
         data = {}
     # return JsonResponse(list(data), safe=False)
     return render(request, "history.html", {"data": data})
+
+# 删除数据
+def deletes(request):
+    if request.method == 'DELETE':
+        ids1 = request.POST
+        print(ids1) 
+        ids = request.body.decode("utf-8")
+        print(ids)
+        for i in ids:
+            print(i)
+            HistoryUser.objects.filter(tag=i).delete()
+            Devices.objects.filter(id=i).delete()
+        return JsonResponse({"msg": "successful"}, safe=False)

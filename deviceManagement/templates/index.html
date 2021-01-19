@@ -53,7 +53,9 @@
 {#    搜索结束的地方#}
 </div >
 
-<div id="toolbar"></div>
+<div id="toolbar">
+<button onclick="deleteSelects()">delete</button> 
+</div>
 <table id="tb_user">
 </table>
 <script>
@@ -71,6 +73,26 @@ function DoOnMsoNumberFormat(cell, row, col) {
             result = "\\@";
         return result;
     }
+ function deleteSelects()
+      {
+        var obj=$('#tb_user');
+        var ids = $.map(obj.bootstrapTable('getSelections'), function (row) {
+                console.log(row)
+                return row.id
+                });
+        $.ajax({
+                url: '/deletes',
+                async: true,
+                type: "delete",
+                dataType: "json",
+                data: {'ids': ids},
+                success: function (data) {
+                    obj.bootstrapTable('remove', {field: 'id',values: ids });
+                }
+                    });
+      }
+
+
 function GetStatus(tag) {
                         var result = [];
                         $.ajax({
@@ -261,7 +283,7 @@ function GetStatus(tag) {
                 });
             })
 
-      
+        
 
 
 
