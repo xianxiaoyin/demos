@@ -4,7 +4,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-19 12:30:13
-LastEditTime: 2021-01-15 10:14:36
+LastEditTime: 2021-01-19 13:09:08
 '''
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
@@ -19,7 +19,7 @@ def Index(request):
     filename = request.FILES.get("excelfile")
     if filename:
         from utils.exportexcel import saveData, initStatus
-        # initStatus(filename)
+        initStatus(filename)
         saveData(filename)
         return render(request, "index.html", {"msg": "file upload successful"})
     else:
