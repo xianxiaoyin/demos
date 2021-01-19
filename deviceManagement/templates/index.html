@@ -62,7 +62,7 @@
      if ( window.history.replaceState ) {
                 window.history.replaceState( null, null, window.location.href );
             }
-  function DoOnMsoNumberFormat(cell, row, col) {
+function DoOnMsoNumberFormat(cell, row, col) {
       console.log(cell)
       console.log(row)
       console.log(col)
@@ -71,6 +71,27 @@
             result = "\\@";
         return result;
     }
+function GetStatus(tag) {
+                        var result = [];
+                        $.ajax({
+                            url: '/status?tag=' + tag,
+                            async: false,
+                            type: "get",
+                            data: {},
+                            success: function (data, status) {
+                                $.each(data, function (key, value) {
+                                    result.push({ value: value.id, text: value.name });
+                                });
+                            }
+                        });
+                        return result;
+                    }
+
+    var tmp1 = GetStatus(1);
+    var tmp2 = GetStatus(2);
+    var tmp3 = GetStatus(3);
+    var tmp4 = GetStatus(4);
+
    $(function () {
         $("#tb_user").bootstrapTable({
             toolbar: "#toolbar",
@@ -116,8 +137,10 @@
                     };
                     return temp;
             },
+            
 
             url: "/devices",
+            async: true,
             columns: [{
                 checkbox: true
             }, {
@@ -140,44 +163,14 @@
                 editable: {
                     type: 'select',
                     title: 'category',
-                    source: function () {
-                        var result = [];
-                        $.ajax({
-                            url: '/status?tag=1',
-                            async: false,
-                            type: "get",
-                            data: {},
-                            success: function (data, status) {
-                                $.each(data, function (key, value) {
-                                    result.push({ value: value.id, text: value.name });
-                                });
-                            }
-                        });
-                        return result;
-                    }
-                }
+                    source: tmp1,}
             }, {
                 field: "status_id",
                 title: "status",
                 editable: {
                     type: 'select',
                     title: 'status',
-                    source: function () {
-                        var result = [];
-                        $.ajax({
-                            url: '/status?tag=2',
-                            async: false,
-                            type: "get",
-                            data: {},
-                            success: function (data, status) {
-                                $.each(data, function (key, value) {
-                                    result.push({ value: value.id, text: value.name });
-                                });
-                            }
-                        });
-                        return result;
-                    }
-                }
+                    source:   tmp2,    }             
             }, {
                 field: "actual_user",
                 title: "actual_user ",
@@ -202,22 +195,7 @@
                 editable: {
                     type: 'select',
                     title: 'location',
-                    source: function () {
-                        var result = [];
-                        $.ajax({
-                            url: '/status?tag=3',
-                            async: false,
-                            type: "get",
-                            data: {},
-                            success: function (data, status) {
-                                $.each(data, function (key, value) {
-                                    result.push({ value: value.id, text: value.name });
-                                });
-                            }
-                        });
-                        return result;
-                    }
-                }
+                    source: tmp3,}
             }, {
                 field: "comments",
                 title: "details",
@@ -231,21 +209,7 @@
                 editable: {
                     type: 'select',
                     title: 'project',
-                    source: function () {
-                        var result = [];
-                        $.ajax({
-                            url: '/status?tag=4',
-                            async: false,
-                            type: "get",
-                            data: {},
-                            success: function (data, status) {
-                                $.each(data, function (key, value) {
-                                    result.push({ value: value.id, text: value.name });
-                                });
-                            }
-                        });
-                        return result;
-                    }
+                    source: tmp4,
                 }
             }, 
                 {
@@ -272,6 +236,7 @@
                     url: "/edit",
                     data: row,
                     dataType: 'JSON',
+                    async: true,
                     success: function (data, status) {
                         if (status == "success") {
                             console.log('提交数据成功');
@@ -291,7 +256,8 @@
         });
         $('#search').click(function() {
                 $('#tb_user').bootstrapTable('refresh', {
-                    url: "/devices"
+                    url: "/devices",
+                    async: true,
                 });
             })
 
