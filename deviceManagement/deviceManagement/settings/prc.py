@@ -3,7 +3,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2021-01-19 09:43:22
-LastEditTime: 2021-01-20 15:03:12
+LastEditTime: 2021-01-20 15:25:53
 '''
 # coding: utf-8
 
@@ -61,7 +61,7 @@ LOGGING = {
     },
     # 日志对象
     'loggers': {
-        'django': {
+        '': {
             'handlers': ['console', 'file'],
             'propagate': True,  # 是否让日志信息继续冒泡给其他的日志处理系统
         },
