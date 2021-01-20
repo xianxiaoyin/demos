@@ -3,7 +3,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-27 17:45:18
-LastEditTime: 2021-01-20 10:54:43
+LastEditTime: 2021-01-20 11:18:45
 '''
 
 import openpyxl
@@ -67,7 +67,7 @@ def initStatus(filename):
                 print(line)
 
 
-def obj_get(obj, name, tag):
+def  (obj, name, tag):
     try:
         return obj.objects.get(name=name, tag=tag)
     except Exception as e:

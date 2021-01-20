@@ -4,7 +4,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-19 12:30:13
-LastEditTime: 2021-01-20 10:27:05
+LastEditTime: 2021-01-20 11:21:32
 '''
 from django.db import models
 from datetime import datetime
@@ -22,7 +22,7 @@ location = 5
 # 状态
 
 class Status(models.Model):
-    name = models.CharField(verbose_name="status name", max_length=20, unique=True)
+    name = models.CharField(verbose_name="status name", max_length=50, unique=True)
     tag = models.CharField(verbose_name="tag", max_length=5)
     update_at = models.DateTimeField(verbose_name="update time", default=datetime.now)
     create_at = models.DateTimeField(verbose_name="create time", auto_now_add=True)
@@ -35,8 +35,8 @@ class Status(models.Model):
 # 设备信息表
 
 class Devices(models.Model):
-    sn = models.CharField(verbose_name="Serial Number", max_length=20, null=True, blank=True)
-    bcode = models.CharField(verbose_name="Barcode", max_length=20, null=True, blank=True)
+    sn = models.CharField(verbose_name="Serial Number", max_length=50, null=True, blank=True)
+    bcode = models.CharField(verbose_name="Barcode", max_length=50, null=True, blank=True)
     category = models.ForeignKey(Status, on_delete=SET_NULL, blank=True, null=True, related_name="category")
     status = models.ForeignKey(Status, on_delete=SET_NULL, blank=True, null=True, related_name="status")
     project = models.ForeignKey(Status, on_delete=SET_NULL, blank=True, null=True, related_name="project")
