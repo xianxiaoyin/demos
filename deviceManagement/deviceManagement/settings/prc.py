@@ -3,7 +3,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2021-01-19 09:43:22
-LastEditTime: 2021-01-20 14:24:42
+LastEditTime: 2021-01-20 14:47:41
 '''
 # coding: utf-8
 
@@ -49,7 +49,7 @@ LOGGING = {
             'level': 'WARNING',
             'class': 'logging.handlers.RotatingFileHandler',
             # 日志位置,日志文件名,日志保存目录必须手动创建，然后给对应的路径即可 注：这里的文件路径要注意BASE_DIR
-            'filename': os.path.join(os.path.dirname(BASE_DIR), "logs/device.log"),
+            'filename': os.path.join(BASE_DIR, "logs/device.log"),
             # 日志文件的最大值,这里我们设置300M
             'maxBytes': 300 * 1024 * 1024,
             # 日志文件的数量,设置最大日志数量为10
