@@ -4,7 +4,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-19 12:30:13
-LastEditTime: 2021-01-20 14:31:51
+LastEditTime: 2021-01-20 15:08:34
 '''
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
@@ -91,7 +91,7 @@ def deviceEdit(request):
                 logger.warning("操作日志记录错误，请管理员修复问题")
                 logger.error(e)
 
-            Devices.objects.filter(sn=data["sn"]).update(**data)
+            Devices.objects.filter(id=uuid).update(**data)
             return JsonResponse({"status": "update success"}, safe=False)
         else:
             return JsonResponse({"status": "create success"}, safe=False)
