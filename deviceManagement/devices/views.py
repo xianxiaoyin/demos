@@ -4,7 +4,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-19 12:30:13
-LastEditTime: 2021-01-20 15:08:34
+LastEditTime: 2021-01-20 15:13:04
 '''
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
@@ -44,7 +44,7 @@ def deviceEdit(request):
         data["update_at"] = datetime.datetime.now()
         uuid = data.pop("id")
         # 如果更新了actual_user字段，把更新记录存储到HistoryUser表中
-        oldDevices, created = Devices.objects.get_or_create(sn=data["sn"])
+        oldDevices, created = Devices.objects.get_or_create(id=uuid)
         if not created:
             try:
                 if oldDevices.actual_user and oldDevices.actual_user != data["actual_user"]:
