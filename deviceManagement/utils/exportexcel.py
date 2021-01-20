@@ -3,7 +3,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-27 17:45:18
-LastEditTime: 2021-01-19 13:47:28
+LastEditTime: 2021-01-20 10:54:43
 '''
 
 import openpyxl
@@ -78,7 +78,7 @@ def obj_get(obj, name, tag):
 
 def saveData(filename):
     for line in readExcel(filename)[1:]:
-        if line[0].strip().lower() == "others":
+        if str(line[0]).strip().lower() == "others":
             Devices.objects.create(sn=line[0], bcode=line[1], category=obj_get(Status, line[2], 1),
                                     status=obj_get(Status, line[3], 2), project=obj_get(Status, line[9], 4),
                                     po_requestor=line[11],
