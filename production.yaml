@@ -2,24 +2,8 @@ version: '3'
 
 volumes:
   static:
-  database:
 
 services:
-  db:
-    image: mariadb
-    container_name: mymariadb
-    restart: always
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    ports:
-      - 3306:3306
-    volumes:
-      - database:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=123456
-      - MYSQL_DATABASE=devices
-      - MYSQL_USER=admin 
-      - MYSQL_PASSWORD=123456
-
   django-python3:
     build:
       context: .
@@ -28,7 +12,6 @@ services:
     container_name: dp
     working_dir: /root/devices/deviceManagement 
     volumes:
-      - database:/root/devices/deviceManagement/database
       - static:/root/devices/deviceManagement/static
     ports:
       - 127.0.0.1:8000:8000

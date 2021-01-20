@@ -67,7 +67,7 @@ def initStatus(filename):
                 print(line)
 
 
-def  (obj, name, tag):
+def obj_get(obj, name, tag):
     try:
         return obj.objects.get(name=name, tag=tag)
     except Exception as e:
