@@ -3,12 +3,14 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-27 17:45:18
-LastEditTime: 2021-01-20 11:18:45
+LastEditTime: 2021-01-20 14:39:17
 '''
 
 import openpyxl
 from devices.models import Devices, Status
 from datetime import datetime
+import logging
+logger = logging.getLogger(__name__)
 
 
 def getIndex(modes_list, filterdata):
@@ -35,44 +37,40 @@ def initStatus(filename):
                 Status.objects.update_or_create(name=line[2], tag="1", update_at=datetime.now(),
                                                 create_at=datetime.now())
             except Exception as e:
-                print(e)
-                print(line)
+                logger.warning(e)
         if line[3]:
             try:
                 Status.objects.update_or_create(name=line[3], tag="2", update_at=datetime.now(),
                                                 create_at=datetime.now())
             except Exception as e:
-                print(e)
-                print(line)
+                logger.warning(e)
         if line[7]:
             try:
                 Status.objects.update_or_create(name=line[7], tag="3", update_at=datetime.now(),
                                                 create_at=datetime.now())
             except Exception as e:
-                print(e)
-                print(line)
+                logger.warning(e)
+
         if line[9]:
             try:
                 Status.objects.update_or_create(name=line[9], tag="4", update_at=datetime.now(),
                                                 create_at=datetime.now())
             except Exception as e:
-                print(e)
-                print(line)
+                logger.warning(e)
+
         if line[10]:
             try:
                 Status.objects.update_or_create(name=line[10], tag="5", update_at=datetime.now(),
                                                 create_at=datetime.now())
             except Exception as e:
-                print(e)
-                print(line)
+                 logger.warning(e)
 
 
 def obj_get(obj, name, tag):
     try:
         return obj.objects.get(name=name, tag=tag)
     except Exception as e:
-        print("not found")
-        print("Error data :  {} --->>> {}".format(name, tag))
+        logger.warning(e)
 
 
 
@@ -88,8 +86,8 @@ def saveData(filename):
         else:
             data = Devices.objects.filter(sn=line[0])
             if data:
-                print("************Data exists***************")
-                print(line)
+                logger.warning("************Data exists***************")
+                logger.warning(line)
             else:
                 Devices.objects.create(sn=line[0], bcode=line[1], category=obj_get(Status, line[2], 1),
                                 status=obj_get(Status, line[3], 2), project=obj_get(Status, line[9], 4),

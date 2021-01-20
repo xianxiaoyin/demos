@@ -4,7 +4,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-19 12:30:13
-LastEditTime: 2021-01-20 10:35:16
+LastEditTime: 2021-01-20 14:31:51
 '''
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
@@ -12,15 +12,21 @@ from .models import Devices, Status, HistoryUser
 from django.db.models import Q
 import json
 import datetime
-
+import logging
+logger = logging.getLogger(__name__)
+ 
 
 # 首页
 def Index(request):
     filename = request.FILES.get("excelfile")
     if filename:
         from utils.exportexcel import saveData, initStatus
+        logger.info("开始初始化数据库······")
         initStatus(filename)
+        logger.info("初始化数据库结束······")
+        logger.info("开始导入数据······")
         saveData(filename)
+        logger.info("导入数据结束······")
         return render(request, "index.html", {"msg": "file upload successful"})
     else:
         return render(request, "index.html")
@@ -29,65 +35,63 @@ def Index(request):
 #  更新设别信息
 def deviceEdit(request):
     if request.method == 'POST':
-        data = request.POST
-        a = json.loads(json.dumps(data))
-        print(a)
-
+        post = request.POST
+        data = json.loads(json.dumps(post))
         try:
-            del a["0"]
+            del data["0"]
         except Exception as e:
-            print("why 0 ?")
-        a["update_at"] = datetime.datetime.now()
-        uuid = a.pop("id")
+            logger.warning("删除临时数据错误，忽略此信息~")
+        data["update_at"] = datetime.datetime.now()
+        uuid = data.pop("id")
         # 如果更新了actual_user字段，把更新记录存储到HistoryUser表中
-        oldDevices, created = Devices.objects.get_or_create(sn=a["sn"])
-
+        oldDevices, created = Devices.objects.get_or_create(sn=data["sn"])
         if not created:
             try:
-                if oldDevices.actual_user and oldDevices.actual_user != a["actual_user"]:
+                if oldDevices.actual_user and oldDevices.actual_user != data["actual_user"]:
                     HistoryUser.objects.create(
                             device_number=uuid,
                             actual_user=oldDevices.actual_user
                     )
-                if oldDevices.bcode and oldDevices.bcode != a["bcode"]:
+                if oldDevices.bcode and oldDevices.bcode != data["bcode"]:
                     HistoryUser.objects.create(
                             device_number=uuid,
                             bcode=oldDevices.bcode
                     )
-                if oldDevices.category and oldDevices.category != a["category_id"]:
+                if oldDevices.category and oldDevices.category != data["category_id"]:
                     HistoryUser.objects.create(
                             device_number=uuid,
                             category=oldDevices.category.name)
-                if oldDevices.status and oldDevices.status != a["status_id"]:
+                if oldDevices.status and oldDevices.status != data["status_id"]:
                     HistoryUser.objects.create(
                             device_number=uuid,
                             status=oldDevices.status.name
                     )
-                if oldDevices.project and oldDevices.project != a["project_id"]:
+                if oldDevices.project and oldDevices.project != data["project_id"]:
                     HistoryUser.objects.create(
                             device_number=uuid,
                             project=oldDevices.project.name
                     )
-                if oldDevices.location and oldDevices.location != a["location_id"]:
+                if oldDevices.location and oldDevices.location != data["location_id"]:
                     HistoryUser.objects.create(
                             device_number=uuid,
                             location=oldDevices.location.name
                     )
 
-                if oldDevices.borrow_wwid and oldDevices.borrow_wwid != a["borrow_wwid"]:
+                if oldDevices.borrow_wwid and oldDevices.borrow_wwid != data["borrow_wwid"]:
                     HistoryUser.objects.create(
                             device_number=uuid,
                             borrow_wwid=oldDevices.borrow_wwid
                     )
-                if oldDevices.comments and oldDevices.comments != a["comments"]:
+                if oldDevices.comments and oldDevices.comments != data["comments"]:
                     HistoryUser.objects.create(
                         device_number=uuid,
                         comments=oldDevices.comments
                     )
             except Exception as e:
-                print(e)
+                logger.warning("操作日志记录错误，请管理员修复问题")
+                logger.error(e)
 
-            Devices.objects.filter(sn=a["sn"]).update(**a)
+            Devices.objects.filter(sn=data["sn"]).update(**data)
             return JsonResponse({"status": "update success"}, safe=False)
         else:
             return JsonResponse({"status": "create success"}, safe=False)
