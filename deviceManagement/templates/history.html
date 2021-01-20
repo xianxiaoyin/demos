@@ -18,18 +18,32 @@
   <body>
   <table class="table table-striped">
         <tr >
-          <th class="text-center" >username </th>
+          <th class="text-center" >actual_user </th>
+          <th class="text-center" >borrow_wwid </th>
+          <th class="text-center" >bcode </th>
+          <th class="text-center" >category </th>
+          <th class="text-center" >status </th>
+          <th class="text-center" >project </th>
+          <th class="text-center" >location </th>
+          <th class="text-center" >comments </th>
           <th class="text-center" >update time </th>
         </tr>
       {% for d in data %}
         <tr>
-          <td class="text-center" id="sn">{{ d.actual_user}} </td>
-          <td class="text-center" id="barcode">{{ d.create_at }}</td>
+          <td class="text-center" id="sn">{{ d.actual_user |default_if_none:""}} </td>
+          <td class="text-center" id="sn">{{ d.borrow_wwid |default_if_none:""}} </td>
+          <td class="text-center" id="sn">{{ d.bcode |default_if_none:"" }} </td>
+          <td class="text-center" id="sn">{{ d.category |default_if_none:""}} </td>
+          <td class="text-center" id="sn">{{ d.status |default_if_none:""}} </td>
+          <td class="text-center" id="sn">{{ d.project |default_if_none:""}} </td>
+          <td class="text-center" id="sn">{{ d.location |default_if_none:""}} </td>
+          <td class="text-center" id="sn">{{ d.comments |default_if_none:""}} </td>
+          <td class="text-center" id="barcode">{{ d.create_at |default_if_none:""}}</td>
         </tr>
         {% endfor %}
 
   </ul> 
 </table>
-
+ 
   </body>
 </html>

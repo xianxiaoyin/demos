@@ -4,7 +4,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-19 12:30:13
-LastEditTime: 2021-01-20 09:58:23
+LastEditTime: 2021-01-20 10:35:16
 '''
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
@@ -54,25 +54,24 @@ def deviceEdit(request):
                             device_number=uuid,
                             bcode=oldDevices.bcode
                     )
-                if oldDevices.category and oldDevices.category != a["category"]:
+                if oldDevices.category and oldDevices.category != a["category_id"]:
                     HistoryUser.objects.create(
                             device_number=uuid,
-                            category=oldDevices.category
+                            category=oldDevices.category.name)
+                if oldDevices.status and oldDevices.status != a["status_id"]:
+                    HistoryUser.objects.create(
+                            device_number=uuid,
+                            status=oldDevices.status.name
                     )
-                if oldDevices.status and oldDevices.status != a["status"]:
+                if oldDevices.project and oldDevices.project != a["project_id"]:
                     HistoryUser.objects.create(
                             device_number=uuid,
-                            status=oldDevices.status
+                            project=oldDevices.project.name
                     )
-                if oldDevices.project and oldDevices.project != a["project"]:
+                if oldDevices.location and oldDevices.location != a["location_id"]:
                     HistoryUser.objects.create(
                             device_number=uuid,
-                            project=oldDevices.project
-                    )
-                if oldDevices.location and oldDevices.location != a["location"]:
-                    HistoryUser.objects.create(
-                            device_number=uuid,
-                            location=oldDevices.location
+                            location=oldDevices.location.name
                     )
 
                 if oldDevices.borrow_wwid and oldDevices.borrow_wwid != a["borrow_wwid"]:
