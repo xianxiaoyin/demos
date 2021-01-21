@@ -34,11 +34,11 @@
 
     <div class="col-md-4">
         <form method="post" action="/" enctype="multipart/form-data" id="videoForm">
-        <div class="form-group">
+        <div class="form-group">Upload
             <label for="exampleInputFile">Import EXCEL</label>
             <input type="file" id="exampleInputFile" name="excelfile">
          </div>
-        <button  type="submit" class="btn btn-default">Submit</button>
+        <button  type="submit" class="btn btn-default">Upload</button>
         <span><font color="red">{{ msg | default_if_none:"" }} </font></span>
         </form>
     </div>
