@@ -10,6 +10,7 @@ services:
       dockerfile: compose/production/django/Dockerfile
     image: dp
     container_name: dp
+    restart: always
     working_dir: /root/devices/deviceManagement 
     volumes:
       - static:/root/devices/deviceManagement/static
@@ -22,6 +23,7 @@ services:
         context: .
         dockerfile: compose/production/nginx/Dockerfile
       image: nginx-dp
+      restart: always
       container_name: nginx-dp
       volumes:
         - static:/root/devices/deviceManagement/static
