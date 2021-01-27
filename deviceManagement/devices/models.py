@@ -4,7 +4,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 
 Date: 2020-12-19 12:30:13
-LastEditTime: 2021-01-20 11:21:32
+LastEditTime: 2021-01-27 13:49:37
 '''
 from django.db import models
 from datetime import datetime
@@ -46,7 +46,7 @@ class Devices(models.Model):
     actual_user = models.CharField(verbose_name="actual_user", max_length=50, null=True, blank=True)
     borrow_wwid = models.CharField(verbose_name="borrow_wwid", max_length=50, null=True, blank=True)
     po_requestor = models.CharField(verbose_name=" po_requestor", max_length=50, null=True, blank=True)
-    comments = models.TextField(verbose_name="comments", null=True, blank=True)
+    comments = models.TextField(verbose_name="comments", max_length=200, null=True, blank=True)
     update_at = models.DateTimeField(verbose_name="update time", auto_now=True)
     create_at = models.DateTimeField(verbose_name="create time", auto_now_add=True)
 
