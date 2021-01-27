@@ -61,10 +61,32 @@
 </table>
 <script>
 
-    {% comment %} 按F5不会提交表单 {% endcomment %}
-     if ( window.history.replaceState ) {
-                window.history.replaceState( null, null, window.location.href );
-            }
+{% comment %} 按F5不会提交表单 {% endcomment %}
+ if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+
+ //表格超出宽度鼠标悬停显示td内容
+function paramsMatter(value,row,index, field) {
+var span=document.createElement('span');
+span.setAttribute('title',value);
+span.innerHTML = value;
+return span.outerHTML;
+}
+//td宽度以及内容超过宽度隐藏
+function formatTableUnit(value, row, index) {
+return {
+css: {
+"white-space": 'nowrap',
+"text-overflow": 'ellipsis',
+"overflow": 'hidden',
+"max-width":"150px"
+}
+}
+}
+
+
+
 function DoOnMsoNumberFormat(cell, row, col) {
       console.log(cell)
       console.log(row)
@@ -144,6 +166,7 @@ function GetStatus(tag) {
             sortOrder: "desc",                   //排序方式
             showRefresh: false,                  // 刷新按钮
             showColumns: true,                 // 是否显示所有列
+            minimumCountColumns: 8,            //最少允许的列数
             showToggle:true,                    //是否显示详细视图和列表视图的切换按钮
             search: false,                       // 显示搜索
             searchOnEnterKey:true,              // 回车执行搜索
@@ -184,6 +207,7 @@ function GetStatus(tag) {
             }, {
                 field: "sn",
                 title: "sn",
+                width: 100,
                 editable: {
                     type: 'text',
                     title: 'sn',
@@ -205,6 +229,7 @@ function GetStatus(tag) {
             }, {
                 field: "status_id",
                 title: "status",
+                width: 100,
                 editable: {
                     type: 'select',
                     title: 'status',
@@ -214,14 +239,14 @@ function GetStatus(tag) {
                 title: "actual_user ",
                 editable: {
                     type: 'text',
-                    title: 'bcode',
+                    title: 'actual_user',
                 }
             }, {
                 field: "borrow_wwid",
                 title: "borrow_wwid ",
                 editable: {
                     type: 'text',
-                    title: 'bcode',
+                    title: 'borrow_wwid',
                 }
             },
                 {
@@ -233,7 +258,7 @@ function GetStatus(tag) {
                 title: "details",
                 editable: {
                     type: 'textarea',
-                    title: 'bcode',
+                    title: 'details',
                 }
             },{
                 field: "project_id",
@@ -247,12 +272,20 @@ function GetStatus(tag) {
                 {
                 field: "po",
                 title: "po#",
+                    editable: {
+                    type: 'text',
+                    title: 'po#',
+                }
             },{
                 field: "po_requestor",
                 title: "po_requestor ",
+                    editable: {
+                    type: 'text',
+                    title: 'po_requestor',
+                }
             },
             {
-                    title: 'history user',
+                    title: 'history',
                     align: 'center',
                     formatter: function (value, row, index) {
                         var actions = [];
