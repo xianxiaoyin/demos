@@ -24,6 +24,7 @@
     <title>PID Device List</title>
 </head>
 <body>
+<div>
 <div class="row">
 {#    网页大标题开始#}
       <div class="col-md-8">
@@ -34,7 +35,7 @@
 
     <div class="col-md-4">
         <form method="post" action="/" enctype="multipart/form-data" id="videoForm">
-        <div class="form-group">Upload
+        <div class="form-group">
             <label for="exampleInputFile">Import EXCEL</label>
             <input type="file" id="exampleInputFile" name="excelfile">
          </div>
@@ -53,11 +54,11 @@
 {#    搜索结束的地方#}
 </div >
 
-<div id="toolbar">
+<div id="toolbar" style="overflow-x:nnone;overflow-y:none">
 <button onclick="deleteSelects()">delete</button>
 <button onclick="create()">create</button>
 </div>
-<table id="tb_user">
+<table id="tb_user" >
 </table>
 <script>
 
@@ -326,5 +327,6 @@ function GetStatus(tag) {
             })
     });
 </script>
+</div>
 </body>
 </html> 
