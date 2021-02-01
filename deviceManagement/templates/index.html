@@ -19,6 +19,9 @@
     <script type="text/javascript" src="/static/tableExport/tableExport.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.3/js/fileinput.min.js"></script>
+    <script type="text/javascript" src="/static/moment/moment.js"></script>
+
+
 
  
     <title>PID Device List</title>
@@ -86,7 +89,12 @@ css: {
 }
 }
 
-
+//转换日期格式(时间戳转换为datetime格式)
+    function changeDateFormat(cellval) {
+        if (cellval != null) {
+            return cellval.replace("T", " ").slice(0, -4);
+        }
+    }
 
 function DoOnMsoNumberFormat(cell, row, col) {
       console.log(cell)
@@ -252,6 +260,10 @@ function GetStatus(tag) {
                 {
                 field: "update_at",
                 title: "update",
+                //获取日期列的值进行转换
+                formatter: function (value, row, index) {
+                    return changeDateFormat(value)
+                }
             }, 
              {
                 field: "comments",
