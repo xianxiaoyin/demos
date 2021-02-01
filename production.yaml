@@ -13,7 +13,7 @@ services:
     restart: always
     working_dir: /root/devices/deviceManagement 
     volumes:
-      - static:/root/devices/deviceManagement/static
+      - static:/root/devices/deviceManagement/staticfiles
     ports:
       - 127.0.0.1:8000:8000
     command: /root/devices/deviceManagement/start.sh
@@ -26,7 +26,7 @@ services:
       restart: always
       container_name: nginx-dp
       volumes:
-        - static:/root/devices/deviceManagement/static
+        - static:/root/devices/deviceManagement/staticfiles
       ports:
         - 80:80
 
