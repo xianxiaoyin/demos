@@ -1,11 +1,11 @@
 '''
 Author: xianxiaoyin
 LastEditors: xianxiaoyin
-Descripttion: 
+Descripttion: 导入数据
 Date: 2020-12-27 17:45:18
-LastEditTime: 2021-01-20 14:39:17
+LastEditTime: 2021-02-01 16:41:49
 '''
-
+import xlrd
 import openpyxl
 from devices.models import Devices, Status
 from datetime import datetime
@@ -17,15 +17,29 @@ def getIndex(modes_list, filterdata):
     return {v: k for k, v in dict(modes_list).items()}.get(filterdata)
 
 
-def readExcel(filename="1.xlsx"):
+def readExcel(filename=None):
+    print(filename)
+    print(filename.name)
+    print(type(filename))
+    print(type(filename.name))
+    print(dir(filename))
     data = []
-    workbook = openpyxl.load_workbook(filename)
-    ws = workbook.active
-    for row in ws.rows:
-        tmp_list = []
-        for cel in row:
-            tmp_list.append(cel.value)
-        data.append(tmp_list)
+    if str(filename.name).endswith("xlsx"):
+        workbook = openpyxl.load_workbook(filename)
+        ws = workbook.active
+        for row in ws.rows:
+            tmp_list = []
+            for cel in row:
+                tmp_list.append(cel.value)
+            data.append(tmp_list)
+    elif str(filename.name).endswith("xls"):
+        workbook = xlrd.open_workbook(filename)
+        wx = workbook.sheet_by_index(0)
+        for rx in range(wx.nrows):
+            tmp_list = []
+            for cl in wx.row(rx):
+                tmp_list.append(cl.value)
+            data.append(tmp_list)
     return data
 
 
