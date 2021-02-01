@@ -1,9 +1,9 @@
 '''
 Author: xianxiaoyin
 LastEditors: xianxiaoyin
-Descripttion: 
+Descripttion:
 Date: 2020-12-19 12:28:05
-LastEditTime: 2021-01-15 10:08:19
+LastEditTime: 2021-02-01 13:24:26
 '''
 import pymysql
 
