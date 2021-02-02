@@ -4,9 +4,10 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 逻辑处理
 Date: 2020-12-19 12:30:13
-LastEditTime: 2021-02-01 14:25:44
+LastEditTime: 2021-02-02 15:23:38
 '''
 import json
+import copy
 import datetime
 import logging
 from django.shortcuts import render
@@ -21,12 +22,18 @@ def index(request):
     '''首页'''
     filename = request.FILES.get("excelfile")
     if filename:
+        logger.info("复制2份内存数据，给2个脚本用")
+        file_name_data_init = copy.deepcopy(filename)
+        file_name_data_save = copy.deepcopy(filename)
         logger.info("开始初始化数据库······")
-        initStatus(filename)
+        initStatus(file_name_data_init)
         logger.info("初始化数据库结束······")
         logger.info("开始导入数据······")
-        saveData(filename)
+        saveData(file_name_data_save)
         logger.info("导入数据结束······")
+        del file_name_data_init
+        del file_name_data_save
+        logger.info("删除复制的数据")
         return render(request, "index.html", {"msg": "file upload successful"})
     return render(request, "index.html")
 

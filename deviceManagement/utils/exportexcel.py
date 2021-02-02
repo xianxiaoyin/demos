@@ -3,7 +3,7 @@ Author: xianxiaoyin
 LastEditors: xianxiaoyin
 Descripttion: 导入数据
 Date: 2020-12-27 17:45:18
-LastEditTime: 2021-02-01 16:41:49
+LastEditTime: 2021-02-02 15:10:29
 '''
 import xlrd
 import openpyxl
@@ -18,11 +18,6 @@ def getIndex(modes_list, filterdata):
 
 
 def readExcel(filename=None):
-    print(filename)
-    print(filename.name)
-    print(type(filename))
-    print(type(filename.name))
-    print(dir(filename))
     data = []
     if str(filename.name).endswith("xlsx"):
         workbook = openpyxl.load_workbook(filename)
@@ -33,7 +28,8 @@ def readExcel(filename=None):
                 tmp_list.append(cel.value)
             data.append(tmp_list)
     elif str(filename.name).endswith("xls"):
-        workbook = xlrd.open_workbook(filename)
+        print(filename.name)
+        workbook = xlrd.open_workbook(file_contents=filename.read())
         wx = workbook.sheet_by_index(0)
         for rx in range(wx.nrows):
             tmp_list = []
