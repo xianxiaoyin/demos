@@ -1,9 +1,9 @@
 '''
 Author: xianxiaoyin
-LastEditors: xianxiaoyin
+@,@LastEditors: ,: xianxiaoyin
 Descripttion: 导入数据
 Date: 2020-12-27 17:45:18
-LastEditTime: 2021-02-02 15:10:29
+@,@LastEditTime: ,: 2021-02-09 13:20:43
 '''
 import xlrd
 import openpyxl
@@ -61,19 +61,19 @@ def initStatus(filename):
             except Exception as e:
                 logger.warning(e)
 
-        if line[9]:
-            try:
-                Status.objects.update_or_create(name=line[9], tag="4", update_at=datetime.now(),
-                                                create_at=datetime.now())
-            except Exception as e:
-                logger.warning(e)
+        # if line[9]:
+        #     try:
+        #         Status.objects.update_or_create(name=line[9], tag="4", update_at=datetime.now(),
+        #                                         create_at=datetime.now())
+        #     except Exception as e:
+        #         logger.warning(e)
 
-        if line[10]:
-            try:
-                Status.objects.update_or_create(name=line[10], tag="5", update_at=datetime.now(),
-                                                create_at=datetime.now())
-            except Exception as e:
-                 logger.warning(e)
+        # if line[10]:
+        #     try:
+        #         Status.objects.update_or_create(name=line[10], tag="5", update_at=datetime.now(),
+        #                                         create_at=datetime.now())
+        #     except Exception as e:
+        #          logger.warning(e)
 
 
 def obj_get(obj, name, tag):
@@ -88,11 +88,10 @@ def saveData(filename):
     for line in readExcel(filename)[1:]:
         if str(line[0]).strip().lower() == "others":
             Devices.objects.create(sn=line[0], bcode=line[1], category=obj_get(Status, line[2], 1),
-                                    status=obj_get(Status, line[3], 2), project=obj_get(Status, line[9], 4),
-                                    po_requestor=line[11],
-                                    location=obj_get(Status, line[7], 3),
-                                    po=line[10], actual_user=line[4], borrow_wwid=line[5],
-                                    comments=line[8], update_at=datetime.now(), create_at=datetime.now())
+                                    status=obj_get(Status, line[3], 2), project=obj_get(Status, line[7], 4),
+                                    po_requestor=line[9],
+                                    po=line[8], actual_user=line[4], borrow_wwid=line[5],
+                                    comments=line[6], update_at=datetime.now(), create_at=datetime.now())
         else:
             data = Devices.objects.filter(sn=line[0])
             if data:
@@ -100,11 +99,10 @@ def saveData(filename):
                 logger.warning(line)
             else:
                 Devices.objects.create(sn=line[0], bcode=line[1], category=obj_get(Status, line[2], 1),
-                                status=obj_get(Status, line[3], 2), project=obj_get(Status, line[9], 4),
-                                po_requestor=line[11],
-                                location=obj_get(Status, line[7], 3),
-                                po=line[10], actual_user=line[4], borrow_wwid=line[5],
-                                comments=line[8], update_at=datetime.now(), create_at=datetime.now())
+                                    status=obj_get(Status, line[3], 2), project=obj_get(Status, line[7], 4),
+                                    po_requestor=line[9],
+                                    po=line[8], actual_user=line[4], borrow_wwid=line[5],
+                                    comments=line[6], update_at=datetime.now(), create_at=datetime.now())
 
 if __name__ == "__main__":
     initStatus("1.xlsx ")
