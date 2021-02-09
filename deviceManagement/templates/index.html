@@ -5,6 +5,7 @@
     <link href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="/static/x-editable/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" type="text/css" />
     <link href="/static/bootstrap-table/bootstrap-table.css" rel="stylesheet" type="text/css" />
+    <link href="/static/bootstrap-select-1.14/dist/css/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
 
     <script src="/static/jquery/jquery-3.5.1.min.js"></script>
     <script src="/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
@@ -14,6 +15,7 @@
     <script src="/static/bootstrap-table/extensions/editable/bootstrap-table-editable.min.js" ></script>
     {% comment %} 导出excel表格设置 {% endcomment %}
     <script src="/static/bootstrap-table/extensions/export/bootstrap-table-export.js" ></script>
+    <script src="/static/bootstrap-select-1.14/dist/js/bootstrap-select.js" ></script>
     <script type="text/javascript" src="/static/tableExport/libs/js-xlsx/xlsx.core.min.js"></script>
     <script type="text/javascript" src="/static/tableExport/libs/FileSaver/FileSaver.min.js"></script>
     <script type="text/javascript" src="/static/tableExport/tableExport.js"></script>
@@ -51,6 +53,9 @@
 {#    搜索开始的地方#}
      <div style="margin: 20px;" class="col-xs-6 ">
         <input type="text" id="inputsearch" class="form-control" style="width: 20%; float: left">
+        <select  class="form-control" name="modelId" style="width: 20%; float: left" id="modelId">
+
+        </select>
         <span id="search"><button class="btn btn-default" type="button">search</button></span>
     </div>
 {#    搜索结束的地方#}
@@ -68,6 +73,9 @@
  if ( window.history.replaceState ) {
             window.history.replaceState( null, null, window.location.href );
         }
+
+
+
 
  //表格超出宽度鼠标悬停显示td内容
 function paramsMatter(value,row,index, field) {
@@ -159,6 +167,30 @@ function GetStatus(tag) {
     var tmp3 = GetStatus(3);
     var tmp4 = GetStatus(4);
 
+function getModelList(){      
+    $("select[name=modelId]").empty();      //清空  
+     $("select[name=modelId]").append("<option></option>"); 
+    $.ajax({url:'/status?tag=1',  
+        type:"get",  
+        cache: false,  
+        error:function(){  
+        },   
+        success:function(data){  
+            var modelList = data;  
+            if(modelList && modelList.length != 0){  
+                for(var i=0; i<modelList.length; i++){  
+                    var option="<option value=\""+modelList[i].id+"\"";  
+                    option += ">"+modelList[i].name+"</option>";  //动态添加数据  
+                    console.log(option)
+                    $("select[name=modelId]").append(option);  
+                }  
+        }  
+        }  
+    });  
+}  
+
+getModelList()
+
    $(function () {
         $("#tb_user").bootstrapTable({
             toolbar: "#toolbar",
@@ -200,6 +232,7 @@ function GetStatus(tag) {
             queryParams: function (params) {
                var temp = {
                         inputsearch: $("#inputsearch").val(),
+                        modelId: $("#modelId").val(),
                         limit: params.limit, // 每页显示数量
                         offset: params.offset, // SQL语句起始索引
                     };
@@ -338,6 +371,7 @@ function GetStatus(tag) {
                 });
             })
     });
+
 </script>
 </div>
 </body>

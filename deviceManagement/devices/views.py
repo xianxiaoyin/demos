@@ -1,10 +1,10 @@
 # encoding:utf-8
 '''
 Author: xianxiaoyin
-LastEditors: xianxiaoyin
+@,@LastEditors: ,: xianxiaoyin
 Descripttion: 逻辑处理
 Date: 2020-12-19 12:30:13
-LastEditTime: 2021-02-02 15:23:38
+@,@LastEditTime: ,: 2021-02-09 15:31:44
 '''
 import json
 import copy
@@ -118,7 +118,16 @@ def status(request):
 def devices(request):
     '''获取所有信息'''
     inputsearch = request.GET.get("inputsearch")
-    if inputsearch:
+    modelId = request.GET.get("modelId")
+    if modelId and inputsearch:
+        device_all = Devices.objects.filter(Q(sn__contains=inputsearch) |
+                                        Q(bcode__contains=inputsearch)|
+                                        Q(comments__contains=inputsearch
+                                        ))
+        device_all = device_all.filter(category__id=modelId).order_by("-update_at").values()
+    elif modelId:
+        device_all = Devices.objects.filter(category__id=modelId).order_by("-update_at").values()
+    elif inputsearch:
         device_all = Devices.objects.filter(Q(sn__contains=inputsearch) |
                                          Q(bcode__contains=inputsearch)|
                                          Q(comments__contains=inputsearch
