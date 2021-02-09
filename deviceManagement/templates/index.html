@@ -248,14 +248,15 @@ function GetStatus(tag) {
                     type: 'text',
                     title: 'actual_user',
                 }
-            }, {
+            }, 
+            {% comment %} {
                 field: "borrow_wwid",
                 title: "borrow_wwid ",
                 editable: {
                     type: 'text',
                     title: 'borrow_wwid',
                 }
-            },
+            }, {% endcomment %}
                 {
                 field: "update_at",
                 title: "update",
