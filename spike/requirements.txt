@@ -13,7 +13,7 @@ click==7.1.2
 colorama==0.4.3
 common==0.1.2
 coverage==5.2.1
-cryptography==3.2
+cryptography==3.3.2
 et-xmlfile==1.0.1
 execnet==1.7.1
 fabric==2.5.0
