@@ -18,7 +18,7 @@ et-xmlfile==1.0.1
 execnet==1.7.1
 fabric==2.5.0
 Flask==1.1.2
-Flask-Cors==3.0.8
+Flask-Cors==3.0.9
 Flask-Migrate==2.5.3
 flask-redis==0.4.0
 Flask-RESTful==0.3.8
